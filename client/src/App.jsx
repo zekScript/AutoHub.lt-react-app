@@ -3,6 +3,9 @@ import './App.css'
 import { User } from './getUser/User'
 import {createBrowserRouter, RouterProvider} from "react-router-dom"
 import  UpdateUser  from './updateUser/UpdateUser'
+import AdminUser from './admin/AdminUser'
+import SignIn from './signin/SignIn'
+import LogIn from './login/LogIn'
 
 function App() {
   const route = createBrowserRouter([
@@ -17,6 +20,18 @@ function App() {
     {
       path:"/update/:id",
       element:<UpdateUser/>
+    },
+    {
+      path:"/admin",
+      element:<AdminUser />
+    },
+    {
+      path:"/signin",
+      element:<SignIn/>
+    },
+    {
+      path:"/login",
+      element:<LogIn/>
     }
     
   ])

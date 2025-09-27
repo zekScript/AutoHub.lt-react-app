@@ -23,7 +23,7 @@ import React, { useState } from 'react'
                                           'Content-Type': 'application/json'      
                                     }
                         })
-                        const json = await res
+                        const json = res
                         if(!res.ok){
                                     setErr(json.error)
                         }
@@ -68,7 +68,7 @@ import React, { useState } from 'react'
                                     onChange={(e) => setAddress(e.target.value)}
                                     ></input>
                         </div> 
-                        <button>Add user</button>    
+                        <button >Add user</button>    
             </form>
     </div>
   )
