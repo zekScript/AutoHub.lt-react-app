@@ -1,5 +1,16 @@
-
+import { getCurrentUser } from "../../getCurrentUser/getCurrentUser"
+import Cookies from "js-cookie"
+// import { getCurrentUser } from "../../../../server/getCurrentUser/getCurrentUser"
 const Navbar = () => {
+  
+  const user = getCurrentUser()
+  const isLoggedIn = getCurrentUser() ? true : false
+
+  const logout = () => {
+    Cookies.remove("token")
+    window.location.reload()
+  }
+
   return (
     
 <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -36,8 +47,17 @@ const Navbar = () => {
         <button className="btn btn-outline-success" type="submit">Search</button>
       </form>
       <div className="d-flex ">
-      <a type="button" href="/signin">Sign in</a>
-      <a type="button" href="/login">Log in</a>
+      {!isLoggedIn ? (
+            <div className='mb-4 mt-3 '>
+              <a href='/signin'>Sign in</a>
+              <a href='/login'>Log in</a>
+            </div>
+          ) : (
+            <div className='mb-4 mt-3 '>
+              {user.name}
+              <a className="pointer" onClick={logout}>Logout</a>
+            </div>
+          )}
 
       </div>
       

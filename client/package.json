@@ -12,6 +12,8 @@
   "dependencies": {
     "axios": "^1.12.2",
     "bootstrap": "^5.3.8",
+    "jsonwebtoken": "^9.0.2",
+    "jwt-decode": "^4.0.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-router": "^7.9.2",
