@@ -54,7 +54,7 @@ const UpdateUser = () => {
       } else {
         setErr(null);
         console.log('User updated successfully');
-        navigate('/'); 
+        navigate('/admin/users'); 
       }
     } catch (error) {
       console.error('Error updating user:', error);

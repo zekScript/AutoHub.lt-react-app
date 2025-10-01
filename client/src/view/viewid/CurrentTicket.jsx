@@ -15,12 +15,9 @@ const CurrentTicket = () => {
 
 
 
-  // if(currentUser.id != id){
-  //   if(currentUser.role === "ADMIN"){
-  //     return null
-  //   }
-  //   nav("/")
-  // }
+if(!currentUser){
+  nav("/login")
+}
 
 
   useEffect(() => {
@@ -44,7 +41,6 @@ const CurrentTicket = () => {
     fetchTicketAndUser();
   }, [id]);
 
-  // Fetch sender info for each unique sender ID
   useEffect(() => {
     const fetchSenders = async () => {
       const uniqueSenderIds = [
