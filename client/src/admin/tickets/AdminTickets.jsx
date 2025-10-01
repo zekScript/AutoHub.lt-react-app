@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router'
 import { useNavigate } from 'react-router'
 import Cookies from "js-cookie"
+import toast from 'react-hot-toast'
 
 const AdminTickets = () => {
   const [tickets, setTickets] = useState([])
@@ -42,10 +43,10 @@ const AdminTickets = () => {
         body: JSON.stringify({ status: newStatus }),
       });
       if (res.ok) {
-        alert("Status changed")
         setTickets(tickets.map(ticket =>
           ticket._id === id ? { ...ticket, status: newStatus } : ticket
         ));
+        toast.success("status changed")
       } else {
         alert("Failed to update status");
       }
@@ -55,10 +56,14 @@ const AdminTickets = () => {
   };
 
   return (
-    <div className='userTable'>
-      <table className='table table-bordered'>
-          <thead>
-            <Link to="/add">Add user</Link>
+      
+
+<div class="container-fluid">
+        <main>
+          <h2>Section title</h2>
+          <div class="table-responsive small">
+            <table class="table table-striped table-sm">
+              <thead>
             <tr>
               <th scope='col'>S.NO</th>
               <th scope='col'>Title</th>
@@ -67,7 +72,7 @@ const AdminTickets = () => {
               <th scope='col'>Actions</th>
             </tr>
           </thead>
-          <tbody>
+              <tbody>
             {tickets.map((ticket, i) => (
               <tr key={i}>
                 <td>{i+1}</td>
@@ -84,14 +89,16 @@ const AdminTickets = () => {
                   </select>
                 </td>
                 <td>
-                  <Link to={`/view/${ticket._id}`} type='button' className='btn btn-danger'>View</Link>
+                  <Link to={`/view/${ticket._id}`} type='button'>View</Link>
                   {/* You can remove or update this button as needed */}
                 </td>
               </tr>
             ))}
           </tbody>
-      </table>
-    </div>
+            </table>
+          </div>
+        </main> 
+      </div>
   )
 }
 
