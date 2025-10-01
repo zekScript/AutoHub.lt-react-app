@@ -7,7 +7,7 @@ export const authenticate = (req, res, next) => {
   const token = authHeader.split(" ")[1];
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded; // { id, email, name }
+    req.user = decoded; 
     next();
   } catch (err) {
     res.status(401).json({ message: "Invalid token" });
@@ -15,7 +15,8 @@ export const authenticate = (req, res, next) => {
 };
 
 export const requireAdmin = (req, res, next) => {
-  if (req.user && req.user.role === "admin") {
+
+  if (req.user && req.user.role.toLowerCase() === "admin") {
     next();
   } else {
     res.status(403).json({ message: "Admin access required" });

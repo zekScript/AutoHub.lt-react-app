@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router'
 import { useNavigate } from 'react-router'
+import Cookies from "js-cookie"
 
 const AdminTickets = () => {
   const [tickets, setTickets] = useState([])
@@ -10,7 +11,15 @@ const AdminTickets = () => {
   useEffect(() => {
     const fetchData = async () => {
       try{
-        const res = await fetch("http://localhost:8000/api/tickets")
+          const token = Cookies.get("token");
+        const res = await fetch("http://localhost:8000/api/tickets", {
+          method: "GET",
+          headers: {
+            "content-type": "application/json",
+            Authorization: `Bearer ${token}`
+          }
+
+        })
         const json = await res.json()
         if(res.status === 403){
           navigate("/")

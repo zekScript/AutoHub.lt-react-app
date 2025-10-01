@@ -226,6 +226,42 @@ export const getTicketById = async (req, res) => {
               }
 }
 
+export const getTicketByIdMessage = async (req, res) => {
+  try {
+    const ticket = await Ticket.findById(req.params.id)
+      .populate('user', 'name') // for ticket owner
+      .populate('messages.sender', 'name role'); // for chat messages
+
+    if (!ticket) {
+      return res.status(404).json({ message: "Ticket not found" });
+    }
+    res.status(200).json(ticket);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+export const addTicketMessage = async (req, res) => {
+  try {
+    const ticketId = req.params.id;
+    const { text } = req.body;
+    const sender = req.user.id;
+    const message = { sender, text };
+
+    await Ticket.findByIdAndUpdate(
+      ticketId,
+      { $push: { messages: message } }
+    );
+
+  const updatedTicket = await Ticket.findById(ticketId)
+      .populate('messages.sender', 'name role');
+
+    res.status(200).json(updatedTicket.messages);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
 
 
 

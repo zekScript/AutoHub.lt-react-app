@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router';
+import Cookies from "js-cookie"
 
 const UpdateUser = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [address, setAddress] = useState('');
+  const [role, setRole] = useState('');
+  const [json, setJson] = useState([])
   const [err, setErr] = useState(null);
 
   const { id } = useParams();
@@ -18,7 +20,9 @@ const UpdateUser = () => {
         if (res.ok) {
           setName(json.name);
           setEmail(json.email);
-          setAddress(json.address);
+          setRole(json.role);
+          setJson(json)
+
         }
       } catch (error) {
         console.log('Error while fetching data', error);
@@ -32,14 +36,16 @@ const UpdateUser = () => {
     const user = {
       name,
       email,
-      address,
+      role,
     };
     try {
+      const token = Cookies.get("token")
       const res = await fetch(`http://localhost:8000/api/update/user/${id}`, {
         method: 'PUT',
         body: JSON.stringify(user),
         headers: {
           'Content-Type': 'application/json',
+          authorization: `Bearer ${token}`
         },
       });
       const json = await res.json();
@@ -55,15 +61,16 @@ const UpdateUser = () => {
     }
   };
 
+
   return (
     <div>
       <h1>Update User</h1>
+      
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="name">Name:</label>
           <input
             type="text"
-            id="name"
             name="name"
             value={name}
             autoComplete="off"
@@ -75,8 +82,7 @@ const UpdateUser = () => {
           <label htmlFor="email">Email:</label>
           <input
             type="email"
-            id="email"
-            name="email"
+             name="email"
             value={email} 
             autoComplete="off"
             placeholder="Email..."
@@ -89,10 +95,10 @@ const UpdateUser = () => {
             type="text"
             id="address"
             name="address"
-            value={address} 
+            value={role} 
             autoComplete="off"
             placeholder="Address..."
-            onChange={(e) => setAddress(e.target.value)}
+            onChange={(e) => setRole(e.target.value)}
           />
         </div>
         <button type="submit">Update User</button>
