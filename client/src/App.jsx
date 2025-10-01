@@ -9,6 +9,7 @@ import LogIn from './login/LogIn'
 import AdminTickets from './admin/tickets/AdminTickets'
 import Home from './home/Home'
 import MakeTicket from './make-ticket/MakeTicket'
+import CurrentTicket from './view/viewid/CurrentTicket'
 
 function App() {
   const route = createBrowserRouter([
@@ -43,7 +44,11 @@ function App() {
     {
       path:"/make-ticket",
       element:<MakeTicket/>
-    }
+    },
+    {
+      path:"/view/:id",
+      element:<CurrentTicket/>
+    },
     
     
   ])

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 
 export const User = () => {
+  const navigate = useNavigate()
 
   
 
@@ -12,6 +13,9 @@ export const User = () => {
       try{
         const res = await fetch("http://localhost:8000/api/users")
         const json = await res.json()
+        if(res.status === 403) {
+          navigate("/")
+        }
         if(res.ok){
           setUsers(json)
         }

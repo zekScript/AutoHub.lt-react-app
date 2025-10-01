@@ -1,12 +1,29 @@
 
 
-import User from "../model/userModel.js"
+import {User, Ticket} from "../model/userModel.js"
 import bcrypt from 'bcrypt'
 import jwt from "jsonwebtoken";
 
 // const hashPassword = (password) => bcrypt.hash(password, 10)
 // const findUserByEmail = async (email) =>
 //   await User.findOne({email})
+
+// export const create = async (req, res) => {
+//   try {
+//     const newUser = new User(req.body);
+//     const { email } = newUser;
+
+//     const userExist = await User.findOne({ email });
+//     if (userExist) {
+//       return res.status(400).json({ message: "User already exists." });
+//     }
+//     const savedData = await newUser.save();
+//     // res.status(200).json(savedData);
+//     res.status(200).json({ message: "User created successfully." });
+//   } catch (error) {
+//     res.status(500).json({ errorMessage: error.message });
+//   }
+// };
 
 
 export const signInUser = async (req, res) => {
@@ -39,8 +56,8 @@ export const logInUser = async (req, res) => {
        if (!user) return res.status(400).json({ message: "You may entered the wrong email" });
        const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ message: "You entered the password wrong" });
-        const token = jwt.sign({ id: user._id, email:user.email, name: user.name }, process.env.JWT_SECRET, { expiresIn: "1h" });
-       return res.status(200).json({ message: "Login successful", user: { id: user._id, email: user.email, name: user.name, token } });
+        const token = jwt.sign({ id: user._id, email: user.email, name: user.name, role: user.role, ticketCount: user.ticketCount, date: user.date  }, process.env.JWT_SECRET, { expiresIn: "62d" });
+       return res.status(200).json({ message: "Login successful", user: { id: user._id, email: user.email, name: user.name, role: user.role, ticketCount: user.ticketCount, date: user.date,  token } });
 
        } catch(err){
        res.status(500).json({ errorMessage: err.message });
@@ -138,6 +155,76 @@ export const deleteUser = async (req, res) => {
 // } 
 
 
+export const createTicket = async (req, res) => {
+  try {
+    const { title, description } = req.body;
+    const userId = req.user.id; // set by authenticate middleware
+
+    // Create a new Ticket document
+    const newTicket = new Ticket({
+      title,
+      description,
+      user: userId, // reference to the authenticated user
+    });
+
+    // Save the ticket to the database
+    const savedTicket = await newTicket.save();
+
+    // Respond with the saved ticket
+    res.status(201).json(savedTicket);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const getAllTickets = async (req, res) => {
+
+       try{
+              const ticketData = await Ticket.find()
+              if(!ticketData || ticketData.length === 0){
+                     return res.status(404).json({message: "User data not found"})
+              }
+                     res.status(200).json(ticketData)
+
+       }
+       catch(err){
+              res.status(500).json({errorMessage:err.message})     
+
+       }
+}
+
+export const updateTicketStatus = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const { status } = req.body;
+    const ticketExist = await Ticket.findById(id);
+    if (!ticketExist) {
+      return res.status(404).json({ message: "Ticket by id not found" });
+    }
+    const updatedTicket = await Ticket.findByIdAndUpdate(
+      id,
+      { status },
+      { new: true }
+    );
+    res.status(200).json(updatedTicket);
+  } catch (err) {
+    res.status(500).json({ errorMessage: err.message });
+  }
+};
+
+export const getTicketById = async (req, res) => {
+              try{
+                     const id = req.params.id
+                     const ticketExists = await Ticket.findById(id)
+                     if(!ticketExists){
+                           return res.status(404).json({message: "Ticket by id not found"})
+
+                     }
+                     res.status(200).json(ticketExists)
+              }catch(err){
+                     res.status(500).json({errorMessage:err.message})     
+              }
+}
 
 
 

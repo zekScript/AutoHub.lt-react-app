@@ -42,11 +42,8 @@ const LogIn = () => {
     if (!res.ok) {
       setErr(json.message || json.errorMessage);
     } else {
-      // Save JWT token in a cookie
-      Cookies.set('token', json.user.token, { expires: 1 }); // expires in 1 day
-      // alert("Login successful!");
-      console.log("login good")
-      // navigate("/");
+      Cookies.set('token', json.user.token, { expires: 62 }); // expires in 1 day
+      
     }
   };
 

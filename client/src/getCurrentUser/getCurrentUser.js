@@ -1,5 +1,4 @@
 import { jwtDecode } from "jwt-decode";
-// import jsonwebtoken from "jsonwebtoken"
 import Cookies from 'js-cookie'
 
 export function getCurrentUser() {
