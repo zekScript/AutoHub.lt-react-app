@@ -9,6 +9,9 @@ import LogIn from './login/LogIn'
 import AdminTickets from './admin/tickets/AdminTickets'
 import Home from './home/Home'
 import MakeTicket from './make-ticket/MakeTicket'
+import CurrentTicket from './view/viewid/CurrentTicket'
+import AllMyTickets from './mytickets/all-made-tickets/AllMyTickets'
+import Faqs from './faqs/Faqs'
 
 function App() {
   const route = createBrowserRouter([
@@ -43,7 +46,24 @@ function App() {
     {
       path:"/make-ticket",
       element:<MakeTicket/>
-    }
+    },
+    {
+      path:"/view/:id",
+      element:<CurrentTicket/>
+    },
+    {
+      path:"/:id/tickets",
+      element:<AllMyTickets/>
+    },
+    {
+      path:"/faqs",
+      element:<Faqs/>
+    },
+    // {
+    //   path:"*",
+    //   element:<ForOFor/>
+    // }
+
     
     
   ])

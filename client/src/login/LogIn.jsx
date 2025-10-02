@@ -2,32 +2,20 @@ import React from 'react'
 import { useState } from 'react'
 import Cookies from 'js-cookie'
 import { useNavigate } from 'react-router'
+import { getCurrentUser } from '../getCurrentUser/getCurrentUser'
 
 const LogIn = () => {
-      const [name, setName] = useState("")
       const [email, setEmail] = useState("");
       const [password, setPassword] = useState("");
       const [err, setErr] = useState(null);
       const navigate = useNavigate();
-  //     const handleSignIn = async (e) => {
-  //   e.preventDefault();
-  //   const user = { name, email, password };
-  //   const res = await fetch("http://localhost:8000/api/signin", {
-  //     method: 'POST',
-  //     body: JSON.stringify(user),
-  //     headers: { 'Content-Type': 'application/json' }
-  //   });
-  //   const json = await res.json();
-  //   if (!res.ok) {
-  //     setErr(json.error);
-  //   } else {
-  //     setErr(null);
-  //     // Save token to localStorage or context
-  //     // localStorage.setItem('token', json.token);
-  //     console.log("User signed in");
-  //   }
-  // };
 
+      const user = getCurrentUser();
+      if(user){
+        navigate("/")
+      }
+      
+  
 
   const handleLogIn = async (e) => {
     e.preventDefault();
@@ -38,35 +26,65 @@ const LogIn = () => {
       body: JSON.stringify({ email, password })
     });
     const json = await res.json();
-    console.log()
     if (!res.ok) {
-      setErr(json.message || json.errorMessage);
+      toast.error(`Error.\nReason: ${json.message || json.errorMessage}`, {
+      position: "top-right",
+      duration: 3000
+    })
     } else {
-      // Save JWT token in a cookie
-      Cookies.set('token', json.user.token, { expires: 1 }); // expires in 1 day
-      // alert("Login successful!");
-      console.log("login good")
-      // navigate("/");
+      Cookies.set('token', json.user.token, { expires: 62 });
+      toast.success("You are successfully logged in.", {
+      position: "top-right",
+      duration: 3000
+    })
+
     }
+     window.location.reload()
+
   };
 
 
   return (
     <>
-    <form onSubmit={handleLogIn} className='w-50'>
-      <div className="mb-3">
-        <label htmlFor="signInEmail" className="form-label">Email address</label>
-        <input type="email" name='email' className="form-control" id="signInEmail"
+    
+
+    
+    <main className="form-signin w-100 m-auto">
+      <form onSubmit={handleLogIn}>
+        <img
+          className="mb-4"
+          src="/home.png"
+          alt=""
+          width="72"
+          height="57"
+
+        />
+
+       
+        <h1 className="h3 mb-3 fw-normal">Please log in</h1>
+        <div className="form-floating">
+           <input type="email" name='email' className="form-control" id="signInEmail"
           value={email} onChange={e => setEmail(e.target.value)} />
-      </div>
-      <div className="mb-3">
-        <label htmlFor="signInPassword" className="form-label">Password</label>
-        <input type="password" name='password' className="form-control" id="signInPassword"
+          <label for="floatingInput">Email address</label>
+        </div>
+        <div className="form-floating">
+          <input type="password" name='password' className="form-control" id="signInPassword"
           value={password} onChange={e => setPassword(e.target.value)} />
-      </div>
-      <button type="submit" className="btn btn-primary">Submit</button>
-      {err && <div className="text-danger">{err}</div>}
-    </form>
+          <label for="floatingInput">Password</label>
+        </div>
+        
+        <div className="checkbox mb-3">
+                <label>
+                  <input type="checkbox" value="remember-me" /> Remember me
+                </label>
+              </div>
+        <button className="btn btn-primary w-100 py-2" type="submit" >
+          Sign in
+        </button >
+        <a href='/signin' style={{marginTop: "50px"}}>Don't have an account? Sign up here.</a>
+      </form>
+    </main>
+
     
     
     </>

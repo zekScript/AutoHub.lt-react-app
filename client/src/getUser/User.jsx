@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router'
+import Cookies from "js-cookie"
+import "./user.css"
 
 export const User = () => {
+  const navigate = useNavigate()
 
   
 
@@ -10,8 +13,18 @@ export const User = () => {
   useEffect(() => {
     const fetchData = async () => {
       try{
-        const res = await fetch("http://localhost:8000/api/users")
+        const token = Cookies.get("token")
+        const res = await fetch("http://localhost:8000/api/users", {
+          method: "GET",
+          headers: {
+            "content-type": "application/json",
+            Authorization: `Bearer ${token}`
+          }
+        })
         const json = await res.json()
+        if(res.status === 403) {
+          navigate("/")
+        }
         if(res.ok){
           setUsers(json)
         }
@@ -47,36 +60,53 @@ export const User = () => {
 
   return (
     <div className='userTable'>
-      <table className='table table-bordered'>
-          <thead>
-            <Link to="/add">Add user</Link>
+      
+
+
+
+
+      
+      <div class="container-fluid">
+              <main>
+                <h2>Section title</h2>
+                <div class="table-responsive small">
+                  <table class="table table-striped table-sm">
+                    <thead>
             <tr>
               <th scope='col'>S.NO</th>
               <th scope='col'>Name</th>
               <th scope='col'>Email</th>
-              <th scope='col'>Address</th>
+              <th scope='col'>Password</th>
               <th scope='col'>Actions</th>
+
 
             </tr>
           </thead>
-          <tbody>
+                   <tbody>
             {users.map((user, i) => {
               return(
 <tr key={i}>
   <td>{i+1}</td>
               <td>{user.name}</td>
               <td>{user.email}</td>
-              <td>{user.address}</td>
-              <td><Link to={`/update/${user._id}`} type='button' className='btn btn-danger'>Add</Link>
-              <button onClick={() => handleDelete(user._id)} type='button' className='btn btn-info'>Del</button>
+              <td>{user.password}</td>
+
+              <td><Link to={`/update/${user._id}`} type='button' >Update</Link>
+              <a onClick={() => handleDelete(user._id)} type='button' className='space-between'>Delete</a>
 </td>
             </tr>
               )
             })}
             
           </tbody>
-      </table>
+                  </table>
+                </div>
+              </main> 
+            </div>
 
     </div>
+
+
+
   )
 }

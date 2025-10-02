@@ -27,16 +27,27 @@ const userScema = new mongoose.Schema({
                   default: Date.now
             },
 })
+// Message schema
+const messageSchema = new mongoose.Schema({
+  sender: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  text: String,
+  createdAt: { type: Date, default: Date.now }
+});
+
 // Ticket schema
 const ticketSchema = new mongoose.Schema({
   title: { type: String, required: true },
   description: { type: String },
-  status: { type: String, default: "open" },
+status: { type: String, enum: ['open', 'in review', 'closed'], default: 'open' },
   user: { type: mongoose.Schema.Types.ObjectId, ref: "Users" },
-  createdAt: { type: Date, default: Date.now }
+  createdAt: { type: Date, default: Date.now },
+      messages: [messageSchema]
+
 });
 
 
 
+
+
 export const User =  mongoose.model("Users", userScema)
-export const Ticket = mongoose.model("Tickets", ticketSchema);
+export const Ticket = mongoose.model("Ticket", ticketSchema);
