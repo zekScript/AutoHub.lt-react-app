@@ -263,6 +263,25 @@ export const addTicketMessage = async (req, res) => {
 };
 
 
+export const FindTicketMadeByUser = async (req, res) => {
+  try {
+    const userId = req.params.id;
+
+    // Find all tickets created by that user
+    const tickets = await Ticket.find({ user: userId });
+
+    if (!tickets || tickets.length === 0) {
+      return res.status(404).json({ message: "No tickets found for this user." });
+    }
+
+    res.status(200).json({ tickets });
+  } catch (err) {
+    console.error("Error fetching tickets by user:", err);
+    res.status(500).json({ message: "Server error while fetching tickets." });
+  }
+}
+
+
 
 
 

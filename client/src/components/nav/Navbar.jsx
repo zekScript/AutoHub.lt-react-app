@@ -22,7 +22,7 @@ const Navbar = () => {
       <ul className="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
         <li><a href="/" className="nav-link px-3 link-light">Home</a></li>
         <li><a href="/make-ticket" className="nav-link px-3 link-light">Contact</a></li>
-        <li><a href="#" className="nav-link px-3 link-light">FAQs</a></li>
+        <li><a href="/faqs" className="nav-link px-3 link-light">FAQs</a></li>
       </ul>
 
       {/* Right side: User or Login */}
@@ -47,7 +47,7 @@ const Navbar = () => {
             <li><hr className="dropdown-divider" /></li>
 
             <li><a className="dropdown-item" href="/make-ticket">Make a Ticket</a></li>
-            <li><a className="dropdown-item" href="/">Your Tickets</a></li>
+            <li><a className="dropdown-item" href={`/${user.id}/tickets`}>Your Tickets</a></li>
 
             {user.role === "ADMIN" && (
               <>

@@ -3,11 +3,13 @@ import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { getCurrentUser } from "../getCurrentUser/getCurrentUser";
 
 const MakeTicket = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [message, setMessage] = useState("");
+  const currentUser = getCurrentUser()
 
   const navigate = useNavigate();
 
@@ -39,7 +41,7 @@ const MakeTicket = () => {
       toast((t) => (
         <span>
           ✅ Your ticket is made. See all your tickets{" "}
-          <a href="/tickets" className="text-blue-600 fw-bold">
+          <a href={`/${currentUser.id}/tickets`} className="text-blue-600 fw-bold">
             here
           </a>
           .
@@ -62,6 +64,12 @@ const MakeTicket = () => {
       );
     }
   };
+
+  const handleCancelClick = () => {
+    setTitle("")
+    setDescription("")
+    
+  }
 
   return (
     <div className="d-flex justify-content-center align-items-center vh-100">
@@ -106,7 +114,6 @@ const MakeTicket = () => {
 <button type="submit" className="btn btn-primary fw-bold">
               Send
             </button>
-            <button className="btn ">Cancel</button>
             </div>
             
           </form>

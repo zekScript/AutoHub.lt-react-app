@@ -15,7 +15,7 @@ const Footer = () => {
               <h4 className="fw-bold text-secondary">Help desk</h4>
             </a>
             <p className="text-muted">Helping you manage tickets easily.</p>
-            <p className="text-muted mb-0">&copy; 2025 TicketSystem</p>
+            <p className="text-muted mb-0">&copy; 2025 TicketSystem LLC.</p>
           </div>
 
           {/* Section 1 */}
@@ -24,12 +24,6 @@ const Footer = () => {
             <ul className="nav flex-column">
               <li className="nav-item mb-2">
                 <a href="/" className="nav-link p-0 text-muted">Home</a>
-              </li>
-              <li className="nav-item mb-2">
-                <a href="/about" className="nav-link p-0 text-muted">About</a>
-              </li>
-              <li className="nav-item mb-2">
-                <a href="/pricing" className="nav-link p-0 text-muted">Pricing</a>
               </li>
               <li className="nav-item mb-2">
                 <a href="/faqs" className="nav-link p-0 text-muted">FAQs</a>
@@ -41,15 +35,11 @@ const Footer = () => {
           <div className="col mb-3">
             <h5 className="fw-semibold">Support</h5>
             <ul className="nav flex-column">
-              <li className="nav-item mb-2">
-                <a href="/help" className="nav-link p-0 text-muted">Help Center</a>
-              </li>
+              
               <li className="nav-item mb-2">
                 <a href="/make-ticket" className="nav-link p-0 text-muted">Open Ticket</a>
               </li>
-              <li className="nav-item mb-2">
-                <a href="/contact" className="nav-link p-0 text-muted">Contact Us</a>
-              </li>
+              
             </ul>
           </div>
 

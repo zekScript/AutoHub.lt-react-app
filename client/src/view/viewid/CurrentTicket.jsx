@@ -89,12 +89,8 @@ if(!currentUser){
   };
 
   if (!ticketInfo) return <div>Loading...</div>;
-  if(currentUser.id !== ticketInfo.user){
-    if(currentUser.role === "ADMIN"){
-      return null
-    }
-    nav("/")
-  }
+  
+  
   
   return (
     <div className="container w-75">
@@ -124,7 +120,7 @@ if(!currentUser){
             return (
               <div
                 key={idx}
-                className={`p-2 mb-2 rounded ${isAdmin ? " border-start border-primary border-4" : "bg-white border"}`}
+                className={`p-2 mb-2 rounded ${isAdmin ? " border-start border-primary border-4" : "border"}`}
               >
                 <b>{sender ? sender.name : "Deleted User"} ({sender ? sender.role : "user"}):</b> {msg.text}
                 <div className="text-muted small">{msg.createdAt ? new Date(msg.createdAt).toLocaleString() : ""}</div>

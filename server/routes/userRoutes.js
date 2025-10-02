@@ -1,6 +1,6 @@
 import e from "express";
 
-import { logInUser, deleteUser, getAllUsers, getUserById, update, signInUser, getAllTickets, updateTicketStatus, getTicketById, addTicketMessage } from "../controller/userController.js";
+import { logInUser, deleteUser, getAllUsers, getUserById, update, signInUser, getAllTickets, updateTicketStatus, getTicketById, addTicketMessage, FindTicketMadeByUser } from "../controller/userController.js";
 import {authenticate, requireAdmin} from "../middleware/middleware.js"
 import { createTicket } from "../controller/userController.js";
 const route = e.Router();
@@ -18,6 +18,7 @@ route.post("/ticket", authenticate, createTicket);
 route.get("/tickets", authenticate, requireAdmin, getAllTickets)
 route.put("/update/ticket/:id", updateTicketStatus)
 route.post("/ticket/:id/message", authenticate, addTicketMessage);
+route.get("/:id/mytickets", FindTicketMadeByUser)
 
 
 export default route

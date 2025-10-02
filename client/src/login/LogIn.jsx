@@ -53,7 +53,7 @@ const LogIn = () => {
       <form onSubmit={handleLogIn}>
         <img
           className="mb-4"
-          src="../assets/brand/bootstrap-logo.svg"
+          src="/home.png"
           alt=""
           width="72"
           height="57"
