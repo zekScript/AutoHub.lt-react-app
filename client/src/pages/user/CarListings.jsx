@@ -1,58 +1,53 @@
-
-
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 
 const CarListings = () => {
-      const [author, setAuthor] = useState("")
-      const [carName, setCarName] = useState("")
-      const [price, setPrice] = useState("")
-      const [mileage, setMileage] = useState("")
-      const [fuelType, setFuelType] = useState("")
-      const [imageUrl, setImageUrl] = useState(null)
-      const [description, setDescription] = useState("")
-      const [enginePower, setEnginePower] = useState("")
-      const [defects, setDefects] = useState("")
+  const [listing, setListing] = useState(null)
+  const params = useParams()
 
+  useEffect(() => {
+    const fetchCarListings = async () => {
+      try {
+        const res = await fetch(`http://localhost:8000/api/skelbimai/${params.id}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          }
+        })
+        const json = await res.json()
+        if (res.ok && json.skelbimai && json.skelbimai.length > 0) {
+          setListing(json.skelbimai[0])
+        }
+      } catch (error) {
+        console.error("Error fetching car listings:", error);
+      }
+    }
+    fetchCarListings()
+  }, [params.id])
 
-
-      const params = useParams()
-
-            // Fetch car listings made by the user
-            const fetchCarListings = async () => {
-                  try {
-                        const res = await fetch(`http://localhost:8000/api/skelbimai/${params.id}`, {
-                              method: 'GET',
-                              headers: {
-                                    'Content-Type': 'application/json',
-                              }
-                        })
-                        const json = await res.json()
-                        console.log(json)
-                        if(res.ok){
-                              setAuthor(json.skelbimai[0].author)
-                              setCarName(json.skelbimai[0].carName)
-                              setPrice(json.skelbimai[0].price)
-                              setMileage(json.skelbimai[0].mileage)
-                              setFuelType(json.skelbimai[0].fuelType)
-                              setImageUrl(json.skelbimai[0].imageUrl)
-                              setDescription(json.skelbimai[0].description)
-                              setEnginePower(json.skelbimai[0].enginePower)
-                              setDefects(json.skelbimai[0].defects)
-                              console.log(json)
-                        }
-                  }catch (error) {
-                        console.error("Error fetching car listings:", error);}
-            }
-            fetchCarListings()
-            console.log(author)
-
-
+  if (!listing) return <div>Loading...</div>
 
   return (
     <>
-      <h1>Listing</h1>
-      <img src={imageUrl} alt={carName} />
+      <h1>{listing.carName} Listing</h1>
+      <div>
+        {listing.imageUrl && listing.imageUrl.map((img, idx) => (
+          <img
+            key={idx}
+            src={`http://localhost:8000${img}`}
+            alt={listing.carName}
+            style={{ width: "200px", margin: "10px" }}
+          />
+        ))}
+      </div>
+      <div>
+        <p>Price: {listing.price}</p>
+        <p>Mileage: {listing.mileage}</p>
+        <p>Fuel Type: {listing.fuelType}</p>
+        <p>Description: {listing.description}</p>
+        <p>Engine Power: {listing.enginePower}</p>
+        <p>Defects: {listing.defects}</p>
+      </div>
     </>
   )
 }

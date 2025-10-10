@@ -105,6 +105,7 @@ nav("/search")
         </select>
         <input
           type="text"
+          name="brand"
           placeholder="Marke..."
           value={brand}
           onChange={handleBrandChange}

@@ -4,7 +4,7 @@ const Add_skelbima = () => {
   const [price, setPrice] = useState("");
   const [mileage, setMileage] = useState("");
   const [fuelType, setFuelType] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
+  const [imageUrl, setImageUrl] = useState(null);
   const [description, setDescription] = useState("");
   const [enginePower, setEnginePower] = useState("");
   const [defects, setDefects] = useState("");
@@ -17,38 +17,40 @@ const Add_skelbima = () => {
 
   // fetch data
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    const res = await fetch("http://localhost:8000/api/add_skelbima", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      Authorization: `Bearer ${Cookies.get("token")}`,
-      },
-      body: JSON.stringify({
-        price,
-        mileage,
-        fuelType,
-        imageUrl, 
-        description,
-        enginePower,
-        defects,
-        carName,
-        color,
-        steeringPosition,
-        condition,
-        firstRegistration,
-        contactNumber,
-      }),
-    });
-    const json = await res.json();
-      console.log(json)
+  e.preventDefault();
+  const formData = new FormData();
+  formData.append("price", price);
+  formData.append("mileage", mileage);
+  formData.append("fuelType", fuelType);
+  formData.append("description", description);
+  formData.append("enginePower", enginePower);
+  formData.append("defects", defects);
+  formData.append("carName", carName);
+  formData.append("color", color);
+  formData.append("steeringPosition", steeringPosition);
+  formData.append("condition", condition);
+  formData.append("firstRegistration", firstRegistration);
+  formData.append("contactNumber", contactNumber);
 
-    
-  };
+  // Append all selected files
+  for (let i = 0; i < imageUrl.length; i++) {
+    formData.append("images", imageUrl[i]);
+  }
+
+  const res = await fetch("http://localhost:8000/api/add_skelbima", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${Cookies.get("token")}`,
+    },
+    body: formData,
+  });
+  const json = await res.json();
+  console.log(res)
+  console.log(json);
+};
 
   
 
-  console.log(condition)
 
 
   return (
@@ -95,12 +97,13 @@ const Add_skelbima = () => {
 
         <label>Nuotrauka (URL):</label>
         <input
-          onChange={(e) => setImageUrl(e.target.value)}
-          type="file"
-          accept="image/*"
-          name="imageUrl"
-          required
-        />
+  onChange={(e) => setImageUrl(e.target.files)}
+  type="file"
+  accept="image/*"
+  name="images"
+  multiple
+  required
+/>
         <label>Aprašymas:</label>
         <textarea
           onChange={(e) => setDescription(e.target.value)}

@@ -1,6 +1,6 @@
 import e from "express";
 
-import { logInUser, addSkelbima, deleteUser, getAllUsers, getUserById, update, signInUser, getAllTickets, updateTicketStatus, getTicketById, addTicketMessage, FindTicketMadeByUser, getSkelbimasMadeByUser } from "../controller/userController.js";
+import { logInUser, addSkelbima, deleteUser, getAllUsers, getUserById, update, signInUser, getAllTickets, updateTicketStatus, getTicketById, addTicketMessage, FindTicketMadeByUser, getSkelbimasMadeByUser, searchSkelbimai } from "../controller/userController.js";
 import {authenticate, requireAdmin} from "../middleware/middleware.js"
 import { createTicket } from "../controller/userController.js";
 import multer from "multer";
@@ -34,8 +34,14 @@ route.post("/ticket/:id/message", authenticate, addTicketMessage);
 route.get("/:id/mytickets", FindTicketMadeByUser)
 
 // Skelbimo restful
-route.post("/add_skelbima", upload.single("imageUrl"), addSkelbima)
+route.post(
+  "/add_skelbima",
+  authenticate,
+  upload.array("images", 10), // allow up to 10 images
+  addSkelbima
+);
 route.get("/skelbimai/:id", getSkelbimasMadeByUser)
+route.get("/listings/search", searchSkelbimai)
 
 export default route
 

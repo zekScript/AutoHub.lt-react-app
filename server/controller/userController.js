@@ -267,12 +267,11 @@ export const FindTicketMadeByUser = async (req, res) => {
 export const addSkelbima = async (req, res) => {
   try {
     const userId = req.user.id;
-    let {
+    const {
       price,
       mileage,
       carName,
       fuelType,
-      imageUrl, // let, not const!
       description,
       enginePower,
       defects,
@@ -283,16 +282,15 @@ export const addSkelbima = async (req, res) => {
       contactNumber,
     } = req.body;
 
-    if (req.file) { 
-      imageUrl = `/uploads/${req.file.filename}`;
-    }
+    // Get all uploaded image file paths
+    const imageUrl = req.files ? req.files.map(file => `/uploads/${file.filename}`) : [];
 
     const newSkelbimas = new Post({
       price,
       author: userId,
       mileage,
       fuelType,
-      imageUrl,
+      imageUrl, // array of image paths
       description,
       enginePower,
       defects,
@@ -325,10 +323,33 @@ export const getSkelbimasMadeByUser = async (req, res) => {
 
     res.status(200).json({ skelbimai });
   } catch (err) {
-    console.error("Error fetching listings by user:", err);
-    res.status(500).json({ message: "Server error while fetching listings." });
+        res.status(500).json({ errorMessage: err.message });
+
   }
 };
+
+// server/controller/userController.js
+export const searchSkelbimai = async (req, res) => {
+  try{
+const query = {}
+  if (req.query.minPrice) query.price = { $gte: Number(req.query.minPrice) }
+  if (req.query.maxPrice) query.price = { ...query.price, $lte: Number(req.query.maxPrice) }
+  if (req.query.minMileage) query.mileage = { $gte: Number(req.query.minMileage) }
+  if (req.query.maxMileage) query.mileage = { ...query.mileage, $lte: Number(req.query.maxMileage) }
+  if (req.query.fuelType) query.fuelType = req.query.fuelType
+  if (req.query.brand) query.brand = req.query.brand
+  if (req.query.model) query.model = req.query.model
+
+  const skelbimai = await Post.find(query)
+    res.status(200).json({ skelbimai });
+  }catch(err){
+    res.status(500).json({ errorMessage: err.message });
+  }
+  
+
+}
+
+
 
 // {
 //   "description": "Puikus automobilis, tvarkingas, paruoštas eksploatacijai.",
