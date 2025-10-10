@@ -269,6 +269,7 @@ export const addSkelbima = async (req, res) => {
     const userId = req.user.id;
     const {
       price,
+      model,
       mileage,
       carName,
       fuelType,
@@ -295,6 +296,7 @@ export const addSkelbima = async (req, res) => {
       enginePower,
       defects,
       color,
+      model,
       carName,
       steeringPosition,
       condition,
@@ -329,26 +331,60 @@ export const getSkelbimasMadeByUser = async (req, res) => {
 };
 
 // server/controller/userController.js
-export const searchSkelbimai = async (req, res) => {
-  try{
-const query = {}
-  if (req.query.minPrice) query.price = { $gte: Number(req.query.minPrice) }
-  if (req.query.maxPrice) query.price = { ...query.price, $lte: Number(req.query.maxPrice) }
-  if (req.query.minMileage) query.mileage = { $gte: Number(req.query.minMileage) }
-  if (req.query.maxMileage) query.mileage = { ...query.mileage, $lte: Number(req.query.maxMileage) }
-  if (req.query.fuelType) query.fuelType = req.query.fuelType
-  if (req.query.brand) query.brand = req.query.brand
-  if (req.query.model) query.model = req.query.model
+// export const searchSkelbimai = async (req, res) => {
+//  try {
+//     const {
+//       startDate,
+//       endDate,
+//       minPrice,
+//       maxPrice,
+//       minMileage,
+//       maxMileage,
+//       fuelType,
+//       carName, 
+//       model,
+//     } = req.query;
 
-  const skelbimai = await Post.find(query)
-    res.status(200).json({ skelbimai });
-  }catch(err){
-    res.status(500).json({ errorMessage: err.message });
-  }
-  
+//     const filter = {
+//       ...(carName && { carName }),
+            
+//       ...(model && { model }),
 
-}
 
+//       // Match by fuel type
+//       ...(fuelType && { fuelType }),
+
+//       // Price range
+//       ...(minPrice && maxPrice && {
+//         price: { $gte: Number(minPrice), $lte: Number(maxPrice) },
+//       }),
+
+//       // Mileage range
+//       ...(minMileage && maxMileage && {
+//         mileage: { $gte: Number(minMileage), $lte: Number(maxMileage) },
+//       }),
+//     };
+
+//     // Add $expr for year filtering (only if startDate & endDate exist)
+//     if (startDate && endDate) {
+//       filter.$expr = {
+//         $and: [
+//           { $gte: [{ $year: "$firstRegistration" }, Number(startDate)] },
+//           { $lte: [{ $year: "$firstRegistration" }, Number(endDate)] },
+//         ],
+//       };
+//     }
+
+//     // Run query
+//     const skelbimai = await Post.find(filter);
+//     res.status(200).json({ filter });
+//   } catch (error) {
+//     console.error("Error during search:", error);
+//     res.status(500).json({ message: "Server error" });
+//   }
+
+
+// }
 
 
 // {
@@ -372,3 +408,28 @@ const query = {}
 //   "city": "Vilnius",
 //   "telephone": "+37060000000"
 // }
+
+
+export const searchSkelbimai = async (req, res) => {
+  try {
+    const query = {};
+    if (req.query.minPrice) query.price = { $gte: Number(req.query.minPrice) };
+    if (req.query.maxPrice) query.price = { ...query.price, $lte: Number(req.query.maxPrice) };
+    if (req.query.minMileage) query.mileage = { $gte: Number(req.query.minMileage) };
+    if (req.query.maxMileage) query.mileage = { ...query.mileage, $lte: Number(req.query.maxMileage) };
+    if (req.query.fuelType) query.fuelType = req.query.fuelType;
+    if (req.query.carName) query.carName = req.query.carName;
+    if (req.query.model) query.model = req.query.model;
+
+
+    const skelbimai = await Post.find(query);
+    res.status(200).json({ skelbimai });
+  } catch (err) {
+    res.status(500).json({ errorMessage: err.message });
+  }
+};
+
+
+
+
+

@@ -14,6 +14,7 @@ const Add_skelbima = () => {
   const [firstRegistration, setFirstRegistration] = useState("");
   const [contactNumber, setContactNumber] = useState("");
   const [carName, setCarName] = useState("");
+  const [model, setModel] = useState("");
 
   // fetch data
   const handleSubmit = async (e) => {
@@ -31,6 +32,7 @@ const Add_skelbima = () => {
   formData.append("condition", condition);
   formData.append("firstRegistration", firstRegistration);
   formData.append("contactNumber", contactNumber);
+  formData.append("model", model);
 
   // Append all selected files
   for (let i = 0; i < imageUrl.length; i++) {
@@ -45,8 +47,6 @@ const Add_skelbima = () => {
     body: formData,
   });
   const json = await res.json();
-  console.log(res)
-  console.log(json);
 };
 
   
@@ -157,6 +157,12 @@ const Add_skelbima = () => {
           onChange={(e) => setContactNumber(e.target.value)}
           type="text"
           name="contactNumber"
+          required
+        />
+        <input
+          onChange={(e) => setModel(e.target.value)}
+          type="text"
+          name="model"
           required
         />
         <button type="submit">Skelbti</button>

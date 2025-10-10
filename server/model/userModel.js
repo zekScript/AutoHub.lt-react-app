@@ -56,6 +56,7 @@ const postSchema = new mongoose.Schema({
       mileage: { type: Number, required: true },
       fuelType: { type: String },
 imageUrl: [{ type: String }], 
+      model: {type: String},
 
       wishes: [{ type: mongoose.Schema.Types.ObjectId, ref: "Users" }],
       body: { type: String },

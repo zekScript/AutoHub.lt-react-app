@@ -19,10 +19,7 @@ const Search = () => {
     "Peugeot",
   ];
 
-  const handleFuelTypeChange = (e) => {
-    setFuelType(e.target.value);
-    console.log("Selected fuel type:", e.target.value); // Log selected value
-  };
+ 
   const handleCarTypeChange = (e) => {
     setCarType(e.target.value);
   };
@@ -46,7 +43,7 @@ const Search = () => {
   };
 
   const handleSubmit = () => {
-nav("/search")    
+  nav("/search")    
   };
 
   return (
@@ -55,37 +52,31 @@ nav("/search")
         {/* Filters */}
         <h3>Pagaminimo Data</h3>
         <input
-          onChange={(e) => setStartDate(e.target.value)}
           type="text"
           name="startDate"
         />
         <input
-          onChange={(e) => setEndDate(e.target.value)}
           type="text"
           name="endDate"
         />
         <h3>Kaina</h3>
         <input
-          onChange={(e) => setMinPrice(e.target.value)}
           type="number"
           name="minPrice"
           placeholder="Min kaina"
         />
         <input
-          onChange={(e) => setMaxPrice(e.target.value)}
           type="number"
           name="maxPrice"
           placeholder="Max kaina"
         />
         <h3>Rida</h3>
         <input
-          onChange={(e) => setMinMileage(e.target.value)}
           type="number"
           name="minMileage"
           placeholder="Min rida"
         />
         <input
-          onChange={(e) => setMaxMileage(e.target.value)}
           type="number"
           name="maxMileage"
           placeholder="Max rida"
@@ -96,7 +87,7 @@ nav("/search")
           
         >
           <option value="">Pasirinkite kuro tipą</option>
-          <option value="benzin">Benzinas</option>
+          <option value="benzinas">Benzinas</option>
           <option value="dyzelinas">Dyzelinas</option>
           <option value="elektra">Elektra</option>
           <option value="elektra-benzinas">

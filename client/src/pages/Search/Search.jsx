@@ -15,7 +15,7 @@ const SearchPage = () => {
   const maxMileage = searchParams.get("maxMileage")
   const fuelType = searchParams.get("fuelType")
   const model = searchParams.get("model")
-  const brand = searchParams.get("brand")
+  const carName = searchParams.get("carName")
 
   useEffect(() => {
     const fetchListings = async () => {
@@ -30,8 +30,7 @@ const SearchPage = () => {
       if (maxMileage) params.append("maxMileage", maxMileage)
       if (fuelType) params.append("fuelType", fuelType)
       if (model) params.append("model", model)
-      if (brand) params.append("brand", brand)
-      console.log(params.toString())
+      if (carName) params.append("carName", carName)
 
       const res = await fetch(`http://localhost:8000/api/listings/search?${params.toString()}`)
       const data = await res.json()
@@ -43,7 +42,6 @@ const SearchPage = () => {
     fetchListings()
   }, [searchParams])
 
-  console.log(results)
 
   return (
     <div>
