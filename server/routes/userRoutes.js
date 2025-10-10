@@ -1,9 +1,22 @@
 import e from "express";
 
-import { logInUser, addSkelbima, deleteUser, getAllUsers, getUserById, update, signInUser, getAllTickets, updateTicketStatus, getTicketById, addTicketMessage, FindTicketMadeByUser } from "../controller/userController.js";
+import { logInUser, addSkelbima, deleteUser, getAllUsers, getUserById, update, signInUser, getAllTickets, updateTicketStatus, getTicketById, addTicketMessage, FindTicketMadeByUser, getSkelbimasMadeByUser } from "../controller/userController.js";
 import {authenticate, requireAdmin} from "../middleware/middleware.js"
 import { createTicket } from "../controller/userController.js";
+import multer from "multer";
+import path from "path";
 const route = e.Router();
+
+// Multer config
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads/"); 
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + path.extname(file.originalname));
+  },
+});
+const upload = multer({ storage });
 
 // route.post("/user", create) // create
 route.get("/users", authenticate, requireAdmin, getAllUsers) // read
@@ -21,8 +34,8 @@ route.post("/ticket/:id/message", authenticate, addTicketMessage);
 route.get("/:id/mytickets", FindTicketMadeByUser)
 
 // Skelbimo restful
-route.post("/add_skelbima", authenticate, addSkelbima)
-
+route.post("/add_skelbima", upload.single("imageUrl"), addSkelbima)
+route.get("/skelbimai/:id", getSkelbimasMadeByUser)
 
 export default route
 

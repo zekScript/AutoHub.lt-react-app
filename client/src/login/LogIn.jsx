@@ -3,6 +3,7 @@ import { useState } from 'react'
 import Cookies from 'js-cookie'
 import { useNavigate } from 'react-router'
 import { getCurrentUser } from '../getCurrentUser/getCurrentUser'
+import { toast } from 'react-hot-toast'
 
 const LogIn = () => {
       const [email, setEmail] = useState("");
@@ -39,7 +40,6 @@ const LogIn = () => {
     })
 
     }
-     window.location.reload()
 
   };
 

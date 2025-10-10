@@ -9,7 +9,7 @@ import cookieParser from "cookie-parser"
 
 const app = express();
 
-
+app.use("/uploads", express.static("uploads"));
 app.use(bodyParser.json());
 app.use(cors())
 app.use(cors({

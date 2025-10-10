@@ -65,7 +65,7 @@ const postSchema = new mongoose.Schema({
       firstRegistration: { type: Date},
       wheelPosition: { type: String },
       color: { type: String },
-      condition: { type: String, enum: ['new', 'used'] },
+      condition: { type: String },
       engineDisplacement: { type: Number },
       country: { type: String },
       city: { type: String },

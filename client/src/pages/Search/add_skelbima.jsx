@@ -97,6 +97,7 @@ const Add_skelbima = () => {
         <input
           onChange={(e) => setImageUrl(e.target.value)}
           type="file"
+          accept="image/*"
           name="imageUrl"
           required
         />
