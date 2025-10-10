@@ -1,9 +1,7 @@
-import  AddUser  from './addUser/AddUser'
 import './App.css'
 import { User } from './getUser/User'
 import {createBrowserRouter, RouterProvider} from "react-router-dom"
 import  UpdateUser  from './updateUser/UpdateUser'
-import AdminUser from './admin/users/AdminUser'
 import SignIn from './signin/SignIn'
 import LogIn from './login/LogIn'
 import AdminTickets from './admin/tickets/AdminTickets'
@@ -12,16 +10,15 @@ import MakeTicket from './make-ticket/MakeTicket'
 import CurrentTicket from './view/viewid/CurrentTicket'
 import AllMyTickets from './mytickets/all-made-tickets/AllMyTickets'
 import Faqs from './faqs/Faqs'
+import SearchPage from './pages/Search/Search'
+import Add_skelbima from './pages/Search/add_skelbima'
+import CarListings from './pages/user/CarListings'
 
 function App() {
   const route = createBrowserRouter([
     {
         path: '/',
         element:<Home />
-    },
-    {
-      path:"/add",
-      element: <AddUser/>
     },
     {
       path:"/update/:id",
@@ -59,6 +56,18 @@ function App() {
       path:"/faqs",
       element:<Faqs/>
     },
+    {
+      path:"/search",
+      element:<SearchPage/>
+    },
+    {
+      path:"/add_skelbima",
+      element:<Add_skelbima/>
+    },
+    {
+      path:"/:id/car_listings",
+      element:<CarListings/>
+    }
     // {
     //   path:"*",
     //   element:<ForOFor/>

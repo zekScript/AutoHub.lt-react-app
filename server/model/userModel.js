@@ -45,9 +45,34 @@ status: { type: String, enum: ['open', 'in review', 'closed'], default: 'open' }
 
 });
 
+// Post schema
 
-
-
+const postSchema = new mongoose.Schema({
+      description: { type: String, required: true },
+      carName: { type: String, required: true },
+      author: { type: mongoose.Schema.Types.ObjectId, ref: "Users" },
+      createdAt: { type: Date, default: Date.now },
+      price: { type: Number, required: true },
+      mileage: { type: Number, required: true },
+      fuelType: { type: String },
+      imageUrl: { type: String },
+      wishes: [{ type: mongoose.Schema.Types.ObjectId, ref: "Users" }],
+      body: { type: String },
+      gearbox: { type: String },
+      defects: { type: String },
+      power: { type: String },
+      wishCount: { type: Number, default: 0 },
+      firstRegistration: { type: Date},
+      wheelPosition: { type: String },
+      color: { type: String },
+      condition: { type: String, enum: ['new', 'used'] },
+      engineDisplacement: { type: Number },
+      country: { type: String },
+      city: { type: String },
+      telephone: { type: String },
+      views: { type: Number, default: 0 },
+});
 
 export const User =  mongoose.model("Users", userScema)
 export const Ticket = mongoose.model("Ticket", ticketSchema);
+export const Post = mongoose.model("Post", postSchema);

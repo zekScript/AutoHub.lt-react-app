@@ -15,7 +15,7 @@ const Navbar = () => {
     <header className="d-flex flex-wrap align-items-center justify-content-between py-3 mb-4 border-bottom  px-4 shadow-sm z-3">
       {/* Logo / Brand */}
       <a href="/" className="d-flex align-items-center mb-2 mb-md-0  text-decoration-none link-light">
-        <h3 className="fw-bold m-0">Help desk</h3>
+        <h3 className="fw-bold m-0">AutoHub.lt</h3>
       </a>
 
       {/* Navigation Links */}

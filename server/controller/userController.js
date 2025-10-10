@@ -1,29 +1,9 @@
 
 
-import {User, Ticket} from "../model/userModel.js"
+import {User, Ticket, Post} from "../model/userModel.js"
 import bcrypt from 'bcrypt'
 import jwt from "jsonwebtoken";
 
-// const hashPassword = (password) => bcrypt.hash(password, 10)
-// const findUserByEmail = async (email) =>
-//   await User.findOne({email})
-
-// export const create = async (req, res) => {
-//   try {
-//     const newUser = new User(req.body);
-//     const { email } = newUser;
-
-//     const userExist = await User.findOne({ email });
-//     if (userExist) {
-//       return res.status(400).json({ message: "User already exists." });
-//     }
-//     const savedData = await newUser.save();
-//     // res.status(200).json(savedData);
-//     res.status(200).json({ message: "User created successfully." });
-//   } catch (error) {
-//     res.status(500).json({ errorMessage: error.message });
-//   }
-// };
 
 
 export const signInUser = async (req, res) => {
@@ -281,7 +261,40 @@ export const FindTicketMadeByUser = async (req, res) => {
   }
 }
 
+export const addSkelbima = async (req, res) => {
+  try{
+      const userId = req.user.id; 
+      const { price, mileage, fuelType, imageUrl, description, enginePower, defects, color, steeringPosition, condition, firstRegistration, contactNumber } = req.body;
+      const newSkelbimas = new Post({ price, author: userId, mileage, fuelType, imageUrl, description, enginePower, defects, color, steeringPosition, condition, firstRegistration, contactNumber });
+      const savedData = await newSkelbimas.save();
+      res.status(200).json(savedData);
+  }
+  catch(err){
+      res.status(500).json({errorMessage:err.message})
+  }
+}
 
 
+// {
+//   "description": "Puikus automobilis, tvarkingas, paruoštas eksploatacijai.",
+//   "author": "6523b7c2e1a2f1a1b2c3d4e5", 
+//   "price": 7500,
+//   "mileage": 120000,
+//   "fuelType": "dyzelinas",
+//   "manufactureDate": "2015-05-20",
+//   "imageUrl": "/uploads/car1.jpg",
+//   "body": "Sedanas",
+//   "gearbox": "Automatinė",
+//   "defects": "Nėra",
+//   "power": "110kW",
+//   "firstRegistration": "2015-06-01",
+//   "wheelPosition": "Kairė",
+//   "color": "Juoda",
+//   "condition": "used",
+//   "engineDisplacement": 1995,
+//   "country": "Lietuva",
+//   "city": "Vilnius",
+//   "telephone": "+37060000000"
+// }
 
 
