@@ -13,6 +13,7 @@ import Faqs from './faqs/Faqs'
 import SearchPage from './pages/Search/Search'
 import Add_skelbima from './pages/Search/add_skelbima'
 import CarListings from './pages/user/CarListings'
+import NotFound from './pages/NotFound/NotFound'
 
 function App() {
   const route = createBrowserRouter([
@@ -67,6 +68,10 @@ function App() {
     {
       path:"/:id/car_listings",
       element:<CarListings/>
+    },
+    {
+      path:"*",
+      element:<NotFound/>
     }
     // {
     //   path:"*",

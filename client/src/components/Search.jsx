@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 const Search = () => {
   const [carType, setCarType] = useState(""); // Add state for car type
   const [brand, setBrand] = useState("");
   const [brandSuggestions, setBrandSuggestions] = useState([]);
+  const [fetchedAllListings, setFetchedAllListings] = useState([])
   const nav = useNavigate();
 
   const brands = [
@@ -43,8 +44,20 @@ const Search = () => {
   };
 
   const handleSubmit = () => {
-  nav("/search")    
+  nav(`/search`)    
   };
+
+ useEffect(() => {
+   const fetchAllListings = async () => {
+    const res = await fetch("http://localhost:8000/api/allListings")
+    const data = await res.json()
+    
+    setFetchedAllListings(data)
+  }
+
+  fetchAllListings()
+ }, []) 
+
 
   return (
     <div>
@@ -84,13 +97,12 @@ const Search = () => {
         <h3>Kuro Tipas</h3>
         <select
           name="fuelType"
-          
         >
           <option value="">Pasirinkite kuro tipą</option>
           <option value="benzinas">Benzinas</option>
           <option value="dyzelinas">Dyzelinas</option>
           <option value="elektra">Elektra</option>
-          <option value="elektra-benzinas">
+          <option value="hibridas">
             Elektra + Benzinas (Hibridas)
           </option>
         </select>
@@ -127,8 +139,13 @@ const Search = () => {
 
         <p>Modelis</p>
         <input type="text" name="model" placeholder="Įveskite modelį" />
+        <p>Pavarų dėže</p>
+        <select name="transmission">
+          <option value="manual" name="manual">Mechaninė</option>
+          <option value="automatic" name="automatic">Automatas</option>
+        </select>
         <p>Kėbulo Tipas</p>
-        <select value={carType} onChange={handleCarTypeChange}>
+        <select name="carType" value={carType} onChange={handleCarTypeChange}>
           <option value="sedanas">Sedanas</option>
           <option value="hečbekas">Hečbekas</option>
           <option value="universalas">Universalas</option>
@@ -142,7 +159,18 @@ const Search = () => {
       </form>
       {/* Grid off all the listings */}
       <div>
-        <div>Grid of listings</div>
+        <div>Recently made listings</div>
+        {/* Implement this feature when user hovers over an image it displays it on the first/main image */}
+        {fetchedAllListings.map((listings, id) => (
+          <div key={id}>
+            {/* href={`/${listings._id}/car_listings`} */}
+            <h1>{listings.carName}</h1>
+            <p>{listings.description}</p>
+            {listings.imageUrl && listings.imageUrl.length > 0 && (
+              <img src={`http://localhost:8000${listings.imageUrl[0]}`} alt={listings.carName} style={{width: "150px"}} />
+            )}
+            </div>
+        ))}
       </div>
     </div>
   );

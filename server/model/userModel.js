@@ -55,8 +55,9 @@ const postSchema = new mongoose.Schema({
       price: { type: Number, required: true },
       mileage: { type: Number, required: true },
       fuelType: { type: String },
-imageUrl: [{ type: String }], 
+      imageUrl: [{ type: String }], 
       model: {type: String},
+      carType: {type: String},
 
       wishes: [{ type: mongoose.Schema.Types.ObjectId, ref: "Users" }],
       body: { type: String },
@@ -72,6 +73,7 @@ imageUrl: [{ type: String }],
       country: { type: String },
       city: { type: String },
       telephone: { type: String },
+      transmission: {type: String},
       views: { type: Number, default: 0 },
 });
 

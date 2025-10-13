@@ -281,6 +281,7 @@ export const addSkelbima = async (req, res) => {
       condition,
       firstRegistration,
       contactNumber,
+      transmission
     } = req.body;
 
     // Get all uploaded image file paths
@@ -294,6 +295,7 @@ export const addSkelbima = async (req, res) => {
       imageUrl, // array of image paths
       description,
       enginePower,
+      transmission,
       defects,
       color,
       model,
@@ -330,104 +332,85 @@ export const getSkelbimasMadeByUser = async (req, res) => {
   }
 };
 
-// server/controller/userController.js
-// export const searchSkelbimai = async (req, res) => {
-//  try {
-//     const {
-//       startDate,
-//       endDate,
-//       minPrice,
-//       maxPrice,
-//       minMileage,
-//       maxMileage,
-//       fuelType,
-//       carName, 
-//       model,
-//     } = req.query;
 
-//     const filter = {
-//       ...(carName && { carName }),
-            
-//       ...(model && { model }),
-
-
-//       // Match by fuel type
-//       ...(fuelType && { fuelType }),
-
-//       // Price range
-//       ...(minPrice && maxPrice && {
-//         price: { $gte: Number(minPrice), $lte: Number(maxPrice) },
-//       }),
-
-//       // Mileage range
-//       ...(minMileage && maxMileage && {
-//         mileage: { $gte: Number(minMileage), $lte: Number(maxMileage) },
-//       }),
-//     };
-
-//     // Add $expr for year filtering (only if startDate & endDate exist)
-//     if (startDate && endDate) {
-//       filter.$expr = {
-//         $and: [
-//           { $gte: [{ $year: "$firstRegistration" }, Number(startDate)] },
-//           { $lte: [{ $year: "$firstRegistration" }, Number(endDate)] },
-//         ],
-//       };
-//     }
-
-//     // Run query
-//     const skelbimai = await Post.find(filter);
-//     res.status(200).json({ filter });
-//   } catch (error) {
-//     console.error("Error during search:", error);
-//     res.status(500).json({ message: "Server error" });
-//   }
-
-
-// }
-
-
-// {
-//   "description": "Puikus automobilis, tvarkingas, paruoštas eksploatacijai.",
-//   "author": "6523b7c2e1a2f1a1b2c3d4e5",
-//   "price": 7500,
-//   "mileage": 120000,
-//   "fuelType": "dyzelinas",
-//   "manufactureDate": "2015-05-20",
-//   "imageUrl": "/uploads/car1.jpg",
-//   "body": "Sedanas",
-//   "gearbox": "Automatinė",
-//   "defects": "Nėra",
-//   "power": "110kW",
-//   "firstRegistration": "2015-06-01",
-//   "wheelPosition": "Kairė",
-//   "color": "Juoda",
-//   "condition": "used",
-//   "engineDisplacement": 1995,
-//   "country": "Lietuva",
-//   "city": "Vilnius",
-//   "telephone": "+37060000000"
-// }
 
 
 export const searchSkelbimai = async (req, res) => {
   try {
     const query = {};
+    let sortOption = {};
+
     if (req.query.minPrice) query.price = { $gte: Number(req.query.minPrice) };
     if (req.query.maxPrice) query.price = { ...query.price, $lte: Number(req.query.maxPrice) };
     if (req.query.minMileage) query.mileage = { $gte: Number(req.query.minMileage) };
     if (req.query.maxMileage) query.mileage = { ...query.mileage, $lte: Number(req.query.maxMileage) };
     if (req.query.fuelType) query.fuelType = req.query.fuelType;
     if (req.query.carName) query.carName = req.query.carName;
+    if (req.query.carType) query.carType = req.query.carType;
     if (req.query.model) query.model = req.query.model;
+    if (req.query.transmission) query.transmission = req.query.transmission;
 
+    // Date filtering
+    if (req.query.startDate && req.query.endDate) {
+      query.$expr = {
+        $and: [
+          { $gte: [{ $year: "$firstRegistration" }, Number(req.query.startDate)] },
+          { $lte: [{ $year: "$firstRegistration" }, Number(req.query.endDate)] },
+        ],
+      };
+    } else if (req.query.startDate) {
+      query.$expr = {
+        $eq: [{ $year: "$firstRegistration" }, Number(req.query.startDate)],
+      };
+    } else if (req.query.endDate) {
+      query.$expr = {
+        $eq: [{ $year: "$firstRegistration" }, Number(req.query.endDate)],
+      };
+    }
 
-    const skelbimai = await Post.find(query);
-    res.status(200).json({ skelbimai });
+    // Sorting
+    switch (req.query.sortBy) {
+      case "cheapest":
+        sortOption = { price: 1 };
+        break;
+      case "most_expensive":
+        sortOption = { price: -1 };
+        break;
+      case "newest":
+        sortOption = { firstRegistration: -1 };
+        break;
+      case "oldest":
+        sortOption = { firstRegistration: 1 };
+        break;
+      case "mileage_highest":
+        sortOption = { mileage: 1 };
+        break;
+      case "mileage_lowest":
+        sortOption = { mileage: -1 };
+        break;
+      default:
+        sortOption = { price: 1 }; 
+    }
+
+    const skelbimai = await Post.find(query).sort(sortOption);
+    res.status(200).json({ skelbimai, query, sortOption });
   } catch (err) {
     res.status(500).json({ errorMessage: err.message });
   }
 };
+
+export const getAllSkelbimai = async (req, res) => {
+try {
+    const skelbimaiData = await Post.find();
+    if (!skelbimaiData || skelbimaiData.length === 0) {
+      return res.status(404).json({ message: "User data not found" });
+    }
+    res.status(200).json(skelbimaiData);
+  } catch (err) {
+    res.status(500).json({ errorMessage: err.message });
+  }
+
+}
 
 
 

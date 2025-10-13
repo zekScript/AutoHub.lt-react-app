@@ -15,6 +15,8 @@ const Add_skelbima = () => {
   const [contactNumber, setContactNumber] = useState("");
   const [carName, setCarName] = useState("");
   const [model, setModel] = useState("");
+  const [transmission, setTransmission] = useState("")
+  const [carType, setCarType] = useState("");
 
   // fetch data
   const handleSubmit = async (e) => {
@@ -33,6 +35,9 @@ const Add_skelbima = () => {
   formData.append("firstRegistration", firstRegistration);
   formData.append("contactNumber", contactNumber);
   formData.append("model", model);
+  formData.append("transmission", transmission)
+  formData.append("carType", carType)
+
 
   // Append all selected files
   for (let i = 0; i < imageUrl.length; i++) {
@@ -46,10 +51,11 @@ const Add_skelbima = () => {
     },
     body: formData,
   });
-  const json = await res.json();
+  if(res.ok){
+    alert("Post added")
+  }
 };
 
-  
 
 
 
@@ -159,6 +165,22 @@ const Add_skelbima = () => {
           name="contactNumber"
           required
         />
+        <select name="transmission" value={transmission} onChange={(e) => setTransmission(e.target.value)}>
+          <option value="">Pasirinkite transmisija</option>
+          <option name="manual" value="manual">Mechaninė</option>
+          <option name="automatic" value="automatic">Automatas</option>
+        </select>
+        <label>Kėbulo tipas</label>
+        <select name="carType" value={carType} onChange={(e) => setCarType(e.target.value)}>
+          <option value="sedanas">Sedanas</option>
+          <option value="hečbekas">Hečbekas</option>
+          <option value="universalas">Universalas</option>
+          <option value="kupe">Kupė</option>
+          <option value="visureigis">Visureigis</option>
+          <option value="kabrioletas">Kabrioletas</option>
+          <option value="pikapas">Pikapas</option>
+          <option value="furgonas">Furgonas</option>
+        </select>
         <input
           onChange={(e) => setModel(e.target.value)}
           type="text"
