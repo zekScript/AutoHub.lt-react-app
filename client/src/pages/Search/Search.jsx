@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
 import { useLoaderData, useLocation, useNavigate, useSearchParams } from "react-router"
 import "./sidebars.css"
+import { numberWithCommas } from "../../components/funcs/bigNumberSeparation"
 
 const SearchPage = () => {
   const [searchParams] = useSearchParams()
@@ -253,8 +254,8 @@ const SearchPage = () => {
         {results.map(listing => (
           <li key={listing._id}>
             <h3>{listing.carName}</h3>
-            <p>Price: {listing.price}</p>
-            <p>Mileage: {listing.mileage}</p>
+            <p>Price: {numberWithCommas(listing.price)}</p>
+            <p>Mileage: {numberWithCommas(listing.mileage)}</p>
             <p>Fuel: {listing.fuelType}</p>
             {listing.imageUrl && listing.imageUrl.length > 0 && (
               <img src={`http://localhost:8000${listing.imageUrl[0]}`} alt={listing.carName} style={{width: "150px"}} />

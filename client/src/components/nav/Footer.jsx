@@ -12,15 +12,14 @@ const Footer = () => {
               href="/"
               className="d-flex align-items-center mb-3 text-decoration-none"
             >
-              <h4 className="fw-bold text-secondary">Help desk</h4>
+              <h4 className="fw-bold text-secondary">AutoHub.lt</h4>
             </a>
-            <p className="text-muted">Helping you manage tickets easily.</p>
-            <p className="text-muted mb-0">&copy; 2025 TicketSystem LLC.</p>
+            <p className="text-muted mb-0">&copy; 2025 EuroHub UAB.</p>
           </div>
 
           {/* Section 1 */}
           <div className="col mb-3">
-            <h5 className="fw-semibold">Company</h5>
+            <h5 className="fw-semibold">Links</h5>
             <ul className="nav flex-column">
               <li className="nav-item mb-2">
                 <a href="/" className="nav-link p-0 text-muted">Home</a>
@@ -45,25 +44,8 @@ const Footer = () => {
 
           {/* Social / Contact */}
           <div className="col mb-3">
-            <h5 className="fw-semibold">Follow Us</h5>
-            <ul className="list-unstyled d-flex gap-3">
-              <li>
-                <a href="#" className="text-muted fs-4">
-                  <i className="bi bi-facebook"></i>
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-muted fs-4">
-                  <i className="bi bi-twitter"></i>
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-muted fs-4">
-                  <i className="bi bi-github"></i>
-                </a>
-              </li>
-            </ul>
-            <p className="text-muted small">Made using react and bootstrap </p>
+            <h5 className="fw-semibold">Actions</h5>
+            <a href="/add_skelbima" type="button" className="btn btn-success">+ Pridėti skelbimą</a>
           </div>
         </div>
       </div>

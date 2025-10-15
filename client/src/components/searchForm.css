@@ -1,0 +1,210 @@
+
+
+.search-wrapper {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.search-form-dark {
+  background: rgba(18, 21, 27, 0.85);
+  border-radius: 1rem;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.3);
+  padding: 2rem;
+  transition: 0.3s;
+}
+
+.search-form-dark:hover {
+  box-shadow: 0 6px 35px rgba(13, 110, 253, 0.15);
+}
+
+
+
+.form-label-dark {
+  color: #bfc8d3;
+  font-weight: 500;
+}
+
+.input-dark,
+.select-dark {
+  background-color: #212529;
+  border: 1px solid #333;
+  color: #f8f9fa;
+  border-radius: 0.5rem;
+  padding: 0.6rem 0.9rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.input-dark:focus,
+.select-dark:focus {
+  border-color: #0d6efd;
+  box-shadow: 0 0 10px rgba(13, 110, 253, 0.3);
+}
+
+.search-btn-dark {
+  width: 50%;
+  font-weight: 600;
+  border-radius: 0.6rem;
+  background: linear-gradient(135deg, #0d6efd, #0056d2);
+  transition: all 0.3s;
+}
+
+.search-btn-dark:hover {
+  background: linear-gradient(135deg, #007bff, #0048aa);
+  transform: translateY(-2px);
+}
+
+/* Brand suggestions */
+.brand-suggestions-dark {
+  background: #1e2229;
+  border: 1px solid #2c323c;
+  border-radius: 0.6rem;
+  margin-top: 4px;
+  padding: 0;
+  list-style: none;
+  position: absolute;
+  width: 100%;
+  z-index: 100;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.brand-suggestions-dark li {
+  padding: 8px 12px;
+  cursor: pointer;
+  color: #ddd;
+}
+
+.brand-suggestions-dark li:hover {
+  background: #0d6efd22;
+  color: #fff;
+}
+
+/* Results */
+.results-section-dark {
+  margin-top: 3rem;
+  color: #f8f9fa;
+}
+
+.results-title-dark {
+  color: #0d6efd;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.results-list-dark {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 3fr));
+  gap: 0.8rem;
+  justify-items: center;
+  padding: 2rem 15px 10px 15px
+  
+}
+
+
+
+.listing-card-dark {
+  background: #161b22;
+  border-radius: 1rem;
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  transition: 0.3s;
+
+}
+
+.listing-card-dark:hover {
+  box-shadow: 0 5px 25px rgba(13, 110, 253, 0.25);
+}
+
+.listing-img-dark {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  overflow: hidden;
+    border-bottom: 1px solid #dcdcdc;
+    height: 145px;
+    width: 100%;
+    position: relative;
+    display: block;
+float: left;
+}
+
+
+
+
+
+
+a {text-decoration: none; }
+
+
+
+/* Search Page Dark Mode Styling */
+
+.search-page-dark {
+  background-color: #0d1117;
+  min-height: 100vh;
+  color: #c9d1d9;
+  padding: 2rem 1rem;
+}
+
+/* Title */
+.search-title-dark {
+  color: #f0f6fc;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+}
+
+/* Results Grid (smaller, compact layout) */
+.results-list-dark {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+  justify-items: center;
+}
+
+/* Listing Card */
+.listing-card-dark {
+  background: #161b22;
+  border-radius: 0.8rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  transition: 0.3s ease;
+  width: 100%;
+  max-width: 240px;
+}
+
+.listing-card-dark:hover {
+  box-shadow: 0 5px 20px rgba(13, 110, 253, 0.25);
+}
+
+/* 🔥 Image — perfectly uniform */
+.listing-img-dark {
+  width: 100%;
+  height: 160px; /* Fixed height for uniformity */
+  object-fit: cover; /* Ensures image fills area evenly */
+  background-color: #0d1117; /* fallback bg if image missing */
+  border-bottom: 1px solid #222;
+}
+
+/* Card Content */
+.listing-info-dark {
+  padding: 0.75rem;
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.listing-content{
+  display: flex;
+  flex-direction: column;
+}
+
+
+.listing-info-dark p {
+  color: #b0b0b0;
+  font-size: 0.8rem;
+  margin-bottom: 0.2rem;
+  line-height: 1.3;
+}

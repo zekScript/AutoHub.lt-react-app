@@ -58,6 +58,7 @@ const postSchema = new mongoose.Schema({
       imageUrl: [{ type: String }], 
       model: {type: String},
       carType: {type: String},
+      engineLiter: {type: String},
 
       wishes: [{ type: mongoose.Schema.Types.ObjectId, ref: "Users" }],
       body: { type: String },
@@ -69,10 +70,10 @@ const postSchema = new mongoose.Schema({
       wheelPosition: { type: String },
       color: { type: String },
       condition: { type: String },
-      engineDisplacement: { type: Number },
+      enginePower: { type: Number },
       country: { type: String },
       city: { type: String },
-      telephone: { type: String },
+      contactNumber: { type: String },
       transmission: {type: String},
       views: { type: Number, default: 0 },
 });

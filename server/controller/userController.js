@@ -272,6 +272,8 @@ export const addSkelbima = async (req, res) => {
       model,
       mileage,
       carName,
+      engineLiter,
+      carType,
       fuelType,
       description,
       enginePower,
@@ -292,6 +294,8 @@ export const addSkelbima = async (req, res) => {
       author: userId,
       mileage,
       fuelType,
+      engineLiter,
+      carType,
       imageUrl, // array of image paths
       description,
       enginePower,
@@ -349,6 +353,8 @@ export const searchSkelbimai = async (req, res) => {
     if (req.query.carType) query.carType = req.query.carType;
     if (req.query.model) query.model = req.query.model;
     if (req.query.transmission) query.transmission = req.query.transmission;
+    // if (req.query.engineLiter)  query.engineLiter = req.query.engineLiter;
+
 
     // Date filtering
     if (req.query.startDate && req.query.endDate) {

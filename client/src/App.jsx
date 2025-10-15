@@ -14,6 +14,9 @@ import SearchPage from './pages/Search/Search'
 import Add_skelbima from './pages/Search/add_skelbima'
 import CarListings from './pages/user/CarListings'
 import NotFound from './pages/NotFound/NotFound'
+import ViewPosts from './pages/userPostsAndWishlist/viewPosts'
+import Wishlist from './pages/userPostsAndWishlist/Wishlist'
+import EditPost from './pages/userPostsAndWishlist/EditPost'
 
 function App() {
   const route = createBrowserRouter([
@@ -70,6 +73,18 @@ function App() {
       element:<CarListings/>
     },
     {
+      path:"/:id/posts",
+      element:<ViewPosts/>
+    },
+    {
+      path:"/:id/wishlist",
+      element:<Wishlist/>
+    },
+    {
+      path:"/edit",
+      element:<EditPost/>
+    },
+    {
       path:"*",
       element:<NotFound/>
     }
@@ -84,7 +99,6 @@ function App() {
 
   return (
     <>
-      {/* <User></User> */}
       <RouterProvider router={route}></RouterProvider>
     </>
   )

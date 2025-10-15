@@ -1,6 +1,87 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Cookies from "js-cookie";
+import "./add_skelbima.css";
+
 const Add_skelbima = () => {
+  const brands = [
+    "Audi",
+    "BMW",
+    "Mercedes",
+    "Volkswagen",
+    "Toyota",
+    "Honda",
+    "Ford",
+    "Opel",
+    "Renault",
+    "Peugeot",
+    "Nissan",
+    "Fiat",
+    "Mazda",
+    "Kia",
+    "Hyundai",
+    "Škoda",
+    "Seat",
+    "Volvo",
+    "Jaguar",
+    "Land Rover",
+    "Lexus",
+    "Mitsubishi",
+    "Subaru",
+    "Suzuki",
+    "Citroën",
+    "Dacia",
+    "Alfa Romeo",
+    "Jeep",
+    "Mini",
+    "Smart",
+    "Tesla",
+    "Cadillac",
+    "Chrysler",
+    "Dodge",
+    "Jeep",
+    "Ram",
+    "Lincoln",
+    "Buick",
+    "GMC",
+    "Acura",
+    "Infiniti",
+    "Genesis",
+    "Rivian",
+    "Polestar",
+    "BYD",
+    "Great Wall",
+    "Tata",
+    "Mahindra",
+    "Proton",
+    "Perodua",
+    "Lada",
+    "Zotye",
+    "Chery",
+    "Geely",
+    "Saab",
+    "Hummer",
+    "Pontiac",
+    "Saturn",
+    "Oldsmobile",
+    "Mercury",
+    "Scion",
+    "Hino",
+    "Isuzu",
+    "Daihatsu",
+    "Tata",
+    "Mahindra",
+    "Foton",
+    "Wuling",
+    "Baojun",
+    "Changan",
+    "Great Wall",
+    "Lifan",
+    "ZX Auto",
+    "FAW",
+    "JAC Motors",
+  ];
+  const [brand, setBrand] = useState("");
+    const [brandSuggestions, setBrandSuggestions] = useState([]);
   const [price, setPrice] = useState("");
   const [mileage, setMileage] = useState("");
   const [fuelType, setFuelType] = useState("");
@@ -15,181 +96,361 @@ const Add_skelbima = () => {
   const [contactNumber, setContactNumber] = useState("");
   const [carName, setCarName] = useState("");
   const [model, setModel] = useState("");
-  const [transmission, setTransmission] = useState("")
+  const [transmission, setTransmission] = useState("");
   const [carType, setCarType] = useState("");
+  const [engineLiter, setEngineLiter] = useState("")
 
-  // fetch data
+  
+  const handleBrandSuggestionClick = (suggestion) => {
+    setBrand(suggestion);
+    setBrandSuggestions([]);
+  };
+
+  const handleBrandChange = (e) => {
+    const value = e.target.value;
+    setBrand(value);
+    setCarName(value);
+    if (value.length > 0) {
+      const suggestions = brands.filter((b) =>
+        b.toLowerCase().startsWith(value.toLowerCase())
+      );
+      setBrandSuggestions(suggestions);
+    } else {
+      setBrandSuggestions([]);
+    }
+  };
+
+
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  const formData = new FormData();
-  formData.append("price", price);
-  formData.append("mileage", mileage);
-  formData.append("fuelType", fuelType);
-  formData.append("description", description);
-  formData.append("enginePower", enginePower);
-  formData.append("defects", defects);
-  formData.append("carName", carName);
-  formData.append("color", color);
-  formData.append("steeringPosition", steeringPosition);
-  formData.append("condition", condition);
-  formData.append("firstRegistration", firstRegistration);
-  formData.append("contactNumber", contactNumber);
-  formData.append("model", model);
-  formData.append("transmission", transmission)
-  formData.append("carType", carType)
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("price", price);
+    formData.append("mileage", mileage);
+    formData.append("fuelType", fuelType);
+    formData.append("description", description);
+    formData.append("enginePower", enginePower);
+    formData.append("defects", defects);
+    formData.append("carName", carName);
+    formData.append("color", color);
+    formData.append("steeringPosition", steeringPosition);
+    formData.append("condition", condition);
+    formData.append("firstRegistration", firstRegistration);
+    formData.append("contactNumber", contactNumber);
+    formData.append("model", model);
+    formData.append("transmission", transmission);
+    formData.append("carType", carType);
+    formData.append("engineLiter", engineLiter);
 
+    if (imageUrl) {
+      for (let i = 0; i < imageUrl.length; i++) {
+        formData.append("images", imageUrl[i]);
+      }
+    }
 
-  // Append all selected files
-  for (let i = 0; i < imageUrl.length; i++) {
-    formData.append("images", imageUrl[i]);
-  }
-
-  const res = await fetch("http://localhost:8000/api/add_skelbima", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${Cookies.get("token")}`,
-    },
-    body: formData,
-  });
-  if(res.ok){
-    alert("Post added")
-  }
-};
-
-
-
+    const res = await fetch("http://localhost:8000/api/add_skelbima", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${Cookies.get("token")}`,
+      },
+      body: formData,
+    });
+    if (res.ok) {
+      alert("Post added");
+    }
+  };
+  
 
   return (
-    <>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Markė
-        </label>
-        <input
-          type="text"
-          value={carName}
-          onChange={(e) => setCarName(e.target.value)}
-          name="carName"
-          required
-        />
-        <label>Kaina:</label>
-        <input
-          type="number"
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
-          name="price"
-          required
-        />
-        <label>Rida:</label>
-        <input
-          type="number"
-          value={mileage}
-          onChange={(e) => setMileage(e.target.value)}
-          name="mileage"
-          required
-        />
-        <label>Kuro tipas:</label>
-        <select
-          name="fuelType"
-          value={fuelType}
-          onChange={(e) => setFuelType(e.target.value)}
-          required
-        >
-          <option value="benzinas">Benzinas</option>
-          <option value="dyzelinas">Dyzelinas</option>
-          <option value="elektra">Elektra</option>
-          <option value="hibridas">Hibridas</option>
-        </select>
+    <div className="container my-5">
+      <h2 className="mb-4">Pridėti skelbimą</h2>
+      <form onSubmit={handleSubmit} className="row g-3 p-4 rounded shadow-sm">
+        <div className="col-md-6">
+          <label className="form-label">Markė</label>
+          <input
+            type="text"
+            value={brand}
+            onChange={handleBrandChange}
+            
+            name="carName"
+            className="form-control"
+            required
+          />
+          {brandSuggestions.length > 0 && (
+          <ul
 
-        <label>Nuotrauka (URL):</label>
-        <input
-  onChange={(e) => setImageUrl(e.target.files)}
-  type="file"
-  accept="image/*"
-  name="images"
-  multiple
-  required
-/>
-        <label>Aprašymas:</label>
-        <textarea
-          onChange={(e) => setDescription(e.target.value)}
-          name="description"
-          required
-        ></textarea>
-        <label>Variklio galia (AG):</label>
-        <input
-          onChange={(e) => setEnginePower(e.target.value)}
-          type="number"
-          name="enginePower"
-          required
-        />
-        <label>Defektai:</label>
-        <select
-          name="defects"
-          value={defects}
-          onChange={(e) => setDefects(e.target.value)}
-          required
-        >
-          <option value="be">Nėra</option>
-          <option value="Daužtas">Daužtas</option>
-          <option value="Skestas">Skestas</option>
-        </select>
-        <label>Spalva</label>
-        <input
-          onChange={(e) => setColor(e.target.value)}
-          type="text"
-          name="color"
-          required
-        />
-        <label>Vairo padėtis</label>
-        <select onChange={(e) => setSteeringPosition(e.target.value)} required>
-          <option value="left">Kairė</option>
-          <option value="right">Dešinė (Anglija)</option>
-        </select>
-        <label>Buklė</label>
-        <select onChange={(e) => setCondition(e.target.value)} required>
-          <option value="new">Naujas</option>
-          <option value="used">Naudotas</option>
-        </select>
-        <label>pirma registracija</label>
-        <input
-          onChange={(e) => setFirstRegistration(e.target.value)}
-          type="date"
-          name="firstRegistration"
-          required
-        />
-        <label>Telefono numeris susisiekti</label>
-        <input
-          onChange={(e) => setContactNumber(e.target.value)}
-          type="text"
-          name="contactNumber"
-          required
-        />
-        <select name="transmission" value={transmission} onChange={(e) => setTransmission(e.target.value)}>
-          <option value="">Pasirinkite transmisija</option>
-          <option name="manual" value="manual">Mechaninė</option>
-          <option name="automatic" value="automatic">Automatas</option>
-        </select>
-        <label>Kėbulo tipas</label>
-        <select name="carType" value={carType} onChange={(e) => setCarType(e.target.value)}>
-          <option value="sedanas">Sedanas</option>
-          <option value="hečbekas">Hečbekas</option>
-          <option value="universalas">Universalas</option>
-          <option value="kupe">Kupė</option>
-          <option value="visureigis">Visureigis</option>
-          <option value="kabrioletas">Kabrioletas</option>
-          <option value="pikapas">Pikapas</option>
-          <option value="furgonas">Furgonas</option>
-        </select>
-        <input
-          onChange={(e) => setModel(e.target.value)}
-          type="text"
-          name="model"
-          required
-        />
-        <button type="submit">Skelbti</button>
+          className="mb-2 bg-light-subtle text-light-emphasis"
+            style={{
+              border: "1px solid ",
+              margin: 0,
+              padding: "0 8px",
+              listStyle: "none",
+              position: "absolute",
+              zIndex: 10,
+            }}
+          >
+            {brandSuggestions.map((suggestion, idx) => (
+              <li
+                key={idx}
+                style={{ cursor: "pointer", padding: "4px 0" }}
+                onClick={() => handleBrandSuggestionClick(suggestion)}
+              >
+                {suggestion}
+              </li>
+            ))}
+          </ul>
+        )}
+        </div>
+        <div className="col-md-6">
+          <label className="form-label">Modelis</label>
+          <input
+            onChange={(e) => setModel(e.target.value)}
+            type="text"
+            name="model"
+            value={model}
+            className="form-control"
+            required
+          />
+          
+        </div>
+        
+        <div className="col-md-4">
+          <label className="form-label">Kaina</label>
+          <input
+            type="number"
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+            name="price"
+            className="form-control"
+            required
+          />
+        </div>
+        <div className="col-md-4">
+          <label className="form-label">Rida</label>
+          <input
+            type="number"
+            value={mileage}
+            onChange={(e) => setMileage(e.target.value)}
+            name="mileage"
+            className="form-control"
+            required
+          />
+        </div>
+        <div className="col-auto">
+          <label className="form-label">Litras</label>
+          <select
+            name="fuelType"
+            value={engineLiter}
+            onChange={(e) => setEngineLiter(e.target.value)}
+            className="form-select"
+            required
+          >
+            <option value="">Pasirinkite</option>
+            <option value="1.0">1.0</option>
+            <option value="1.1">1.1</option>
+            <option value="1.2">1.2</option>
+            <option value="1.3">1.3</option>
+            <option value="1.4">1.4</option>
+            <option value="1.5">1.5</option>
+            <option value="1.6">1.6</option>
+            <option value="1.7">1.7</option>
+            <option value="1.8">1.8</option>
+            <option value="1.9">1.9</option>
+            <option value="2.0">2.0</option>
+            <option value="2.1">2.1</option>
+
+
+            
+          </select>
+        </div>
+        <div className="col-md-4">
+          <label className="form-label">Kuro tipas</label>
+          <select
+            name="fuelType"
+            value={fuelType}
+            onChange={(e) => setFuelType(e.target.value)}
+            className="form-select"
+            required
+          >
+            <option value="">Pasirinkite</option>
+            <option value="benzinas">Benzinas</option>
+            <option value="dyzelinas">Dyzelinas</option>
+            <option value="elektra">Elektra</option>
+            <option value="hibridas">Hibridas</option>
+          </select>
+        </div>
+        
+        <div className="col-md-6">
+          <label className="form-label">Nuotraukos</label>
+          <input
+            onChange={(e) => setImageUrl(e.target.files)}
+            type="file"
+            accept="image/*"
+            name="images"
+            className="form-control"
+            multiple
+            required
+          />
+        </div>
+        <div className="col-md-6">
+          <label className="form-label">Variklio galia (AG)</label>
+          <input
+            onChange={(e) => setEnginePower(e.target.value)}
+            type="number"
+            name="enginePower"
+            value={enginePower}
+            className="form-control"
+            required
+          />
+        </div>
+        <div className="col-md-6">
+          <label className="form-label">Defektai</label>
+          <select
+            name="defects"
+            value={defects}
+            onChange={(e) => setDefects(e.target.value)}
+            className="form-select"
+            required
+          >
+            <option value="">Pasirinkite</option>
+            <option value="be">Nėra</option>
+            <option value="Daužtas">Daužtas</option>
+            <option value="Skestas">Skestas</option>
+          </select>
+        </div>
+        <div className="col-md-6">
+          <label className="form-label">Spalva</label>
+          {/* <input
+            onChange={(e) => setColor(e.target.value)}
+            type="text"
+            name="color"
+            value={color}
+            className="form-control"
+            required
+          /> */}
+<select
+            name="color"
+            value={color}
+            onChange={(e) => setColor(e.target.value)}
+            className="form-select"
+            required
+          >
+            <option value="">Pasirinkite</option>
+            <option value="balta">Balta</option>
+            <option value="juoda">Juoda</option>
+            <option value="pilka">Pilka</option>
+            <option value="sidabrine">Sidabrinė</option>
+            <option value="melyna">Mėlyna</option>
+            <option value="raudona">Raudona</option>
+            <option value="zalia">Žalia</option>
+            <option value="geltona">Geltona</option>
+            <option value="ruda">Ruda</option>
+            <option value="oranzine">Oranžinė</option>
+            <option value="violetine">Violetinė</option>
+            <option value="auksine">Auksinė</option>
+            <option value="kita">Kita</option>
+          </select>
+
+        </div>
+        <div className="col-md-6">
+          <label className="form-label">Vairo padėtis</label>
+          <select
+            onChange={(e) => setSteeringPosition(e.target.value)}
+            value={steeringPosition}
+            className="form-select"
+            required
+          >
+            <option value="">Pasirinkite</option>
+            <option value="left">Kairė</option>
+            <option value="right">Dešinė (Anglija)</option>
+          </select>
+        </div>
+        <div className="col-md-6">
+          <label className="form-label">Būklė</label>
+          <select
+            onChange={(e) => setCondition(e.target.value)}
+            value={condition}
+            className="form-select"
+            required
+          >
+            <option value="">Pasirinkite</option>
+            <option value="new">Naujas</option>
+            <option value="used">Naudotas</option>
+          </select>
+        </div>
+        <div className="col-md-6">
+          <label className="form-label">Pirma registracija</label>
+          <input
+            onChange={(e) => setFirstRegistration(e.target.value)}
+            type="date"
+            name="firstRegistration"
+            value={firstRegistration}
+            className="form-control"
+            required
+          />
+        </div>
+        <div className="col-md-6">
+          <label className="form-label">Telefono numeris susisiekti</label>
+          <input
+            onChange={(e) => setContactNumber(e.target.value)}
+            type="text"
+            name="contactNumber"
+            value={contactNumber}
+            className="form-control"
+            required
+          />
+        </div>
+        <div className="col-md-6">
+          <label className="form-label">Transmisija</label>
+          <select
+            name="transmission"
+            value={transmission}
+            onChange={(e) => setTransmission(e.target.value)}
+            className="form-select"
+            required
+          >
+            <option value="">Pasirinkite transmisiją</option>
+            <option value="manual">Mechaninė</option>
+            <option value="automatic">Automatas</option>
+          </select>
+        </div>
+        <div className="col-md-6">
+          <label className="form-label">Kėbulo tipas</label>
+          <select
+            name="carType"
+            value={carType}
+            onChange={(e) => setCarType(e.target.value)}
+            className="form-select"
+            required
+          >
+            <option value="">Pasirinkite</option>
+            <option value="sedanas">Sedanas</option>
+            <option value="hečbekas">Hečbekas</option>
+            <option value="universalas">Universalas</option>
+            <option value="kupe">Kupė</option>
+            <option value="visureigis">Visureigis</option>
+            <option value="kabrioletas">Kabrioletas</option>
+            <option value="pikapas">Pikapas</option>
+            <option value="furgonas">Furgonas</option>
+          </select>
+        </div>
+        <div className="col-12">
+          <label className="form-label">Aprašymas</label>
+          <textarea
+            onChange={(e) => setDescription(e.target.value)}
+            name="description"
+            value={description}
+            className="form-control"
+            rows={3}
+            required
+          ></textarea>
+        </div>
+        <div className="col-12 text-end">
+          <button type="submit" className="btn btn-primary px-4">
+            Skelbti
+          </button>
+        </div>
       </form>
-    </>
+    </div>
   );
 };
 
