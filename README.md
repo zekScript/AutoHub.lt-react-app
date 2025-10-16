@@ -6,7 +6,7 @@ got to the main folder of the project where it contains client and server
 cd server
 npm install
 cd ..
-cd clent
+cd client
 npm install
 cd ..
 
@@ -14,7 +14,7 @@ cd ..
 # make .env file in /server folder and these values
 ```terminal
 PORT=8000
-MONGO_URL="Your_mongo_url/mern" # make database called mern and collections of posts, users, tickets in mongodb
+MONGO_URL="Your_mongo_url/mern" # make database called mern and collections of posts, users, tickets in mongodb ex mongodb:localhost:201322/mern
 JWT_SECRET="your_jwt_secret" # you can generate this in base 64 or just add random values
 ```
 
