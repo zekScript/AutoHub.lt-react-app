@@ -3,6 +3,7 @@ import Cookies from "js-cookie";
 // import "./add_skelbima.css";
 import {useNavigate, useSearchParams} from "react-router-dom"
 import formatDate from "../../components/funcs/formatDate"
+import toast from "react-hot-toast"
 
 const EditPost = () => {
 
@@ -110,6 +111,7 @@ const EditPost = () => {
 
   
   const handleBrandSuggestionClick = (suggestion) => {
+    setCarName(suggestion)
     setBrand(suggestion);
     setBrandSuggestions([]);
   };
@@ -159,7 +161,13 @@ const EditPost = () => {
     const json = await res.json()
     console.log(json)
     if (res.ok) {
-      alert("Post Updated");
+      toast.success(
+        `Skelbimas sėkmingai pakeistas`,
+        {
+          position: "top-right",
+          duration: 3000,
+        }
+      );
     }
 
     
@@ -468,7 +476,7 @@ const EditPost = () => {
         </div>
         <div className="col-12 text-end">
           <button type="submit" className="btn btn-primary px-4">
-            Skelbti
+            Keisti
           </button>
         </div>
       </form>
