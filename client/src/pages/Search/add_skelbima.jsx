@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Cookies from "js-cookie";
 import "./add_skelbima.css";
+import {useNavigate} from "react-router-dom"
 
 const Add_skelbima = () => {
   const brands = [
@@ -99,10 +100,12 @@ const Add_skelbima = () => {
   const [transmission, setTransmission] = useState("");
   const [carType, setCarType] = useState("");
   const [engineLiter, setEngineLiter] = useState("")
+  const nav = useNavigate()
 
   
   const handleBrandSuggestionClick = (suggestion) => {
     setBrand(suggestion);
+    setCarName(suggestion)
     setBrandSuggestions([]);
   };
 
@@ -157,7 +160,14 @@ const Add_skelbima = () => {
     if (res.ok) {
       alert("Post added");
     }
+
+    if(res.status === 401){
+      nav("/login")
+    }
   };
+
+
+  console.log(brand, carName)
   
 
   return (

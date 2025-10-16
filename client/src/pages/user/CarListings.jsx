@@ -26,13 +26,7 @@ const CarListings = () => {
         }
 
 
-        const userRes = await fetch(`http://localhost:8000/api/user/${json.skelbimai[0].author}`, {
-          method: "GET",
-          headers: {
-            'Content-Type': 'application/json',
-          }
-
-        })
+        const userRes = await fetch(`http://localhost:8000/api/user/${json.skelbimai[0].author}`)
         const jsonUser = await userRes.json()
           setSeller(jsonUser)
 
@@ -57,12 +51,28 @@ const CarListings = () => {
   else if(listing.transmission === "automatic"){
     toLithuanian = "Automatic"
   }
+  let defects;
+
+  if(listing.defects === "be"){
+    defects = "Be defektu"
+  }
+  else(
+    defects = listing.defects
+  )
+
+  let condition;
+  if(listing.condition === "used"){
+    condition = "Naudotas"
+  }
+  else{
+    condition = "Naujas"
+  }
   return (
     <div style={{padding: "24px"}}>
       {/* Title */}
       <div>
         <h3>{listing.carName} {listing.model} {listing.engineLiter}L, {listing.carType}</h3>
-        <p>{formatDate(listing.createdAt)}</p>
+        <p>Skelbima sukurtas: {formatDate(listing.createdAt)}</p>
       </div>
       <div className='d-flex'>
         {/* Side info */}
@@ -70,6 +80,7 @@ const CarListings = () => {
           <p className='text-muted'>Kaina</p>
           <h1 style={{fontWeight: "bold"}}>{numberWithCommas(listing.price)}€</h1>
           <div style={{marginTop: "18px", padding: "15px 5px 15px 0px"}} className='bg-secondary-subtle'>
+            {/* For some reason this display sometime works sometimes not */}
             {/* <p className='text-center'>Pardavėjas: {seller.name}</p> */}
             <div className='bg-secondary rounded w-50 text-center m-auto'>
               {listing.contactNumber}
@@ -105,12 +116,20 @@ const CarListings = () => {
       <td>Spalva</td>
       <td>{upperCaseLetter(listing.color)}</td>
     </tr>
+    <tr>
+      <td>Buklė</td>
+      <td>{condition}</td>
+    </tr>
+    <tr>
+      <td>Defektai</td>
+      <td>{defects}</td>
+    </tr>
   </tbody>
 </table>
         </div>
         {/* Main container */}
-        <div className='container'>
-<div id="carouselExampleIndicators" className="carousel slide">
+        <div className='container ' >
+<div id="carouselExampleIndicators" style={{marginBottom: "15px"}} className="carousel slide">
   {/* <div className="carousel-indicators">
     <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
     <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -139,30 +158,22 @@ const CarListings = () => {
   </button>
 </div>
 
+<div className="alert alert-info text-center w-50 m-auto" >
+         <h3>Įsigijai automobilį?</h3>
+         <p>Deklaruok įgijimą ir registruok internetu!</p>
+         <a href='https://www.regitra.lt/paslaugos/transporto-priemones/igijau-transporto-priemone/isigijau-transporto-priemone/isigijau-lietuvoje-anksciau-registruota-lietuvoje/'>Regitra</a>
+        </div>
 
         </div>
       </div>
 
+<div className='w-50 ' style={{marginTop: "15px", overflowWrap: "break-word"}}>
+<h3>Aprašymas</h3>
+      <hr/>
+      <p>{listing.description}</p>
+</div>
       
-      {/* <h1>{listing.carName} Listing</h1>
-      <div>
-        {listing.imageUrl && listing.imageUrl.map((img, idx) => (
-          <img
-            key={idx}
-            src={`http://localhost:8000${img}`}
-            alt={listing.carName}
-            style={{ width: "200px", margin: "10px" }}
-          />
-        ))}
-      </div>
-      <div>
-        <p>Price: {listing.price}</p>
-        <p>Mileage: {listing.mileage}</p>
-        <p>Fuel Type: {listing.fuelType}</p>
-        <p>Description: {listing.description}</p>
-        <p>Engine Power: {listing.enginePower}</p>
-        <p>Defects: {listing.defects}</p>
-      </div> */}
+      
     </div>
   )
 }

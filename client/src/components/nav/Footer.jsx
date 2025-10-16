@@ -22,7 +22,7 @@ const Footer = () => {
             <h5 className="fw-semibold">Links</h5>
             <ul className="nav flex-column">
               <li className="nav-item mb-2">
-                <a href="/" className="nav-link p-0 text-muted">Home</a>
+                <a href="/" className="nav-link p-0 text-muted">Pagrindas</a>
               </li>
               <li className="nav-item mb-2">
                 <a href="/faqs" className="nav-link p-0 text-muted">FAQs</a>
@@ -32,11 +32,11 @@ const Footer = () => {
 
           {/* Section 2 */}
           <div className="col mb-3">
-            <h5 className="fw-semibold">Support</h5>
+            <h5 className="fw-semibold">Pagalba</h5>
             <ul className="nav flex-column">
               
               <li className="nav-item mb-2">
-                <a href="/make-ticket" className="nav-link p-0 text-muted">Open Ticket</a>
+                <a href="/make-ticket" className="nav-link p-0 text-muted">Atidaryti ticketa</a>
               </li>
               
             </ul>
@@ -44,7 +44,7 @@ const Footer = () => {
 
           {/* Social / Contact */}
           <div className="col mb-3">
-            <h5 className="fw-semibold">Actions</h5>
+            <h5 className="fw-semibold">Veiksmas</h5>
             <a href="/add_skelbima" type="button" className="btn btn-success">+ Pridėti skelbimą</a>
           </div>
         </div>

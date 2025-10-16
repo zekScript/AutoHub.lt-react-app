@@ -2,6 +2,9 @@ import { useState, useEffect } from "react"
 import { useLoaderData, useLocation, useNavigate, useSearchParams } from "react-router"
 import "./sidebars.css"
 import { numberWithCommas } from "../../components/funcs/bigNumberSeparation"
+import "./searchResult.css"
+import formatDate from "../../components/funcs/formatDate"
+import engineConverter from "../../components/funcs/horsepowerAndKWConverter"
 
 const SearchPage = () => {
   const [searchParams] = useSearchParams()
@@ -57,13 +60,21 @@ const SearchPage = () => {
 };
 
   
-
- 
+console.log(results)
 
   return (
-    <div className="d-flex">
+    <div className="m-auto w-50">
+      <select name="sortBy" value={currentSortingFilter} onChange={(e) => handleChangeFilters(e.target.value)}>
+          <option value="cheapest">Pigiausi viršuje</option>
+          <option value="most_expensive">Brangiausi viršuje</option>
+          <option value="newest">Naujausi viršuje</option>
+          <option value="oldest">Seniausi viršuje</option>
+          <option value="mileage_highest">mažiausia rida</option>
+          <option value="mileage_lowest">didžiausia rida</option>
+        </select>
+    <div className="d-flex" style={{marginRight: "32px"}}>
 
-      {/* <div className="flex-shrink-0 p-3 w-50" >
+      {/* <div className="flex-shrink-0 p-3 w-25" >
         <a
           href="/"
           className="d-flex align-items-center pb-3 mb-3 link-body-emphasis text-decoration-none border-bottom"
@@ -247,32 +258,92 @@ const SearchPage = () => {
           </li>
         </ul>
       </div> */}
+      
       {loading && <div>Loading...</div>}
       {!loading && results.length === 0 && <div>No results found.</div>}
-      <ul>
+      
+      <div className="result-listing mt-3 " style={{textDecoration: "none"}}>
         
-        {results.map(listing => (
-          <li key={listing._id}>
-            <h3>{listing.carName}</h3>
-            <p>Price: {numberWithCommas(listing.price)}</p>
-            <p>Mileage: {numberWithCommas(listing.mileage)}</p>
-            <p>Fuel: {listing.fuelType}</p>
-            {listing.imageUrl && listing.imageUrl.length > 0 && (
-              <img src={`http://localhost:8000${listing.imageUrl[0]}`} alt={listing.carName} style={{width: "150px"}} />
-            )}
-          </li>
-        ))}
-      </ul>
-<select name="sortBy" value={currentSortingFilter} onChange={(e) => handleChangeFilters(e.target.value)}>
-          <option value="cheapest">Pigiausi viršuje</option>
-          <option value="most_expensive">Brangiausi viršuje</option>
-          <option value="newest">Naujausi viršuje</option>
-          <option value="oldest">Seniausi viršuje</option>
-          <option value="mileage_highest">mažiausia rida</option>
-          <option value="mileage_lowest">didžiausia rida</option>
-        </select>
-  
+{results.map((car, index) => (
+          <a href={`/${car._id}/car_listings`} style={{textDecoration: "none", marginTop: "15px"}} className="d-flex w-100 "  key={index}>
+            <img
+              src={`http://localhost:8000${car.imageUrl[0]}`}
+              style={{width: "240px", height: "180px", display: "block"}}
+              alt={car.model}
+              className="listing-img-dark"
+            />
+            <div className="d-flex  w-100" style={{flexDirection: "column", marginLeft: "32px"}}>
+<div className="listing-info-result text-muted ml-0 w-100">
+              {/* <h4>{car.model}</h4> */}
+              <div className="listing-content w-100">
+              <p>{car.carName} {car.model} {car.engineLiter}L</p>
+              </div>
+              <div className="text-center" >
+              <p className="text-warning fw-bold" style={{fontSize: "18px", fontWeight: "bold"}}>€{numberWithCommas(car.price)} </p>
 
+              </div>
+            </div>
+           <hr/>
+              <div className="d-flex align-items-center justify-content-start gap-3 text-light" style={{fontSize: "14px"}}>
+                <div style={{display: "flex", flexDirection: "column"}}>
+ <div className="d-flex align-items-center justify-content-start gap-3">
+<div className="d-flex align-items-center gap-2">
+    <p className="mb-0">{car.mileage} km</p>
+    <div className="vr"></div>
+  </div>
+  <div className="d-flex align-items-center gap-2">
+    <p className="mb-0">{formatDate(car.firstRegistration)}</p>
+    <div className="vr"></div>
+  </div>
+  <div className="d-flex align-items-center gap-2">
+    <p className="mb-0">{car.fuelType}</p>
+    <div className="vr"></div>
+  </div>
+  
+  <div className="d-flex align-items-center gap-2">
+    <p className="mb-0">{car.enginePower}kW</p>
+    <div className="vr"></div>
+  </div>
+  <div className="d-flex align-items-center gap-2">
+    <p className="mb-0">{car.carType}</p>
+        <div className="vr"></div>
+
+  </div>
+                </div>
+                <div className="mt-2">
+                  <div className="d-flex align-items-center gap-2">
+                  <p className="mb-0">{car.color}</p>
+                  <div className="vr"></div>
+                </div>
+                </div>
+                </div>
+               
+  
+  
+</div>
+
+
+            </div>
+            
+            
+          </a>
+        ))}
+        
+      </div>
+      
+      
+        
+  </div>
+  
+{/* <nav aria-label="Page navigation example" className=" w-100 d-flex justify-center">
+  <ul class="pagination">
+    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+    <li class="page-item"><a class="page-link" href="#">1</a></li>
+    <li class="page-item"><a class="page-link" href="#">2</a></li>
+    <li class="page-item"><a class="page-link" href="#">3</a></li>
+    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+  </ul>
+</nav> */}
     </div>
   )
 }

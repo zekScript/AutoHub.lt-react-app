@@ -418,6 +418,112 @@ try {
 
 }
 
+export const getAllMadeByUserPost = async (req, res) => {
+  try{
+      const userId = req.params.id;
+      const posts = await Post.find({ author: userId });
+
+    if (!posts || posts.length === 0) {
+      return res
+        .status(404)
+        .json({ message: `No post found for this user. ${userId}` });
+    }
+
+    res.status(200).json({ posts });
+  }
+  catch(err){
+      res.status(500).json({ errorMessage: err.message });
+
+  }
+}
+
+export const deleteMyListing = async (req, res) => {
+  try{
+    const postID = req.params.id
+    const posts = await Post.findByIdAndDelete({_id: postID})
+    if(posts.status === 404) {
+          res.status(404).json( `Post not found ${postID}` );
+
+    }
+    res.status(200).json({ posts });
+
+
+  }
+  catch(err){
+    res.status(500).json({ errorMessage: err.message });
+
+  }
+}
+
+export const updateMylisting = async (req, res) => {
+  try{
+    const id = req.params.id
+    const {
+      price,
+      model,
+      mileage,
+      carName,
+      engineLiter,
+      carType,
+      fuelType,
+      description,
+      enginePower,
+      defects,
+      color,
+      steeringPosition,
+      condition,
+      firstRegistration,
+      contactNumber,
+      transmission
+    } = req.body;
+
+    const updatedPost = await Post.findByIdAndUpdate(
+      id,
+      {price,
+      model,
+      mileage,
+      carName,
+      engineLiter,
+      carType,
+      fuelType,
+      description,
+      enginePower,
+      defects,
+      color,
+      steeringPosition,
+      condition,
+      firstRegistration,
+      contactNumber,
+      transmission},
+      {new: true}
+    )
+     if (!updatedPost) {
+      return res.status(404).json({ error: "Post not found" });
+    }
+    res.status(200).json(updatedPost)
+
+  }
+  catch(err){
+    res.status(500).json({ errorMessage: err.message });
+  }
+}
+
+
+export const findPostByPostId = async (req, res) => {
+  try{
+    const postID = req.params.id
+    const findPostById = await Post.find({_id: postID})
+    if(!findPostById){
+       res.status(404).json("No data found")
+    }
+    res.status(200).json({ findPostById });
+
+  }
+  catch(err){
+        res.status(500).json({ errorMessage: err.message });
+  }
+}
+
 
 
 

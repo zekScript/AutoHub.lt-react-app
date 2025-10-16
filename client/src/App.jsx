@@ -77,7 +77,7 @@ function App() {
       element:<ViewPosts/>
     },
     {
-      path:"/:id/wishlist",
+      path:"/my-wishlist",
       element:<Wishlist/>
     },
     {

@@ -67,7 +67,7 @@ const postSchema = new mongoose.Schema({
       power: { type: String },
       wishCount: { type: Number, default: 0 },
       firstRegistration: { type: Date},
-      wheelPosition: { type: String },
+      steeringPosition: { type: String },
       color: { type: String },
       condition: { type: String },
       enginePower: { type: Number },

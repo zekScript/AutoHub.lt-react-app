@@ -1,6 +1,6 @@
 import e from "express";
 
-import { logInUser, addSkelbima, deleteUser, getAllUsers, getUserById, update, signInUser, getAllTickets, updateTicketStatus, getTicketById, addTicketMessage, FindTicketMadeByUser, getSkelbimasMadeByUser, searchSkelbimai, getAllSkelbimai } from "../controller/userController.js";
+import { logInUser, deleteMyListing, getAllMadeByUserPost, addSkelbima, deleteUser, getAllUsers, getUserById, update, signInUser, getAllTickets, updateTicketStatus, getTicketById, addTicketMessage, FindTicketMadeByUser, getSkelbimasMadeByUser, searchSkelbimai, getAllSkelbimai, updateMylisting, findPostByPostId } from "../controller/userController.js";
 import {authenticate, requireAdmin} from "../middleware/middleware.js"
 import { createTicket } from "../controller/userController.js";
 import multer from "multer";
@@ -43,6 +43,10 @@ route.post(
 route.get("/skelbimai/:id", getSkelbimasMadeByUser)
 route.get("/listings/search", searchSkelbimai)
 route.get("/allListings", getAllSkelbimai)
+route.get("/mylistings/:id", getAllMadeByUserPost)
+route.delete("/delete/myListings/:id", deleteMyListing)
+route.put("/update/myListing/:id", updateMylisting)
+route.get("/findListingByPostId/:id", findPostByPostId)
 
 export default route
 

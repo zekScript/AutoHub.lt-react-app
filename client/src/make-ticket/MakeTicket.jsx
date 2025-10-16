@@ -40,9 +40,9 @@ const MakeTicket = () => {
       setDescription("");
       toast((t) => (
         <span>
-          ✅ Your ticket is made. See all your tickets{" "}
+          ✅ Tavo tiketas padarytas{" "}
           <a href={`/${currentUser.id}/tickets`} className="text-blue-600 fw-bold">
-            here
+            Čia
           </a>
           .
           <button
@@ -72,13 +72,13 @@ const MakeTicket = () => {
       <div className="card shadow-lg p-4" style={{ maxWidth: "600px", width: "100%" }}>
         <div className="card-body">
           <h6 className="card-title text-center mb-4 fw-bold">
-            Please provide details about the issue you are having:
+            Prašau pateikti problema
           </h6>
           {message && <div className="alert alert-danger">{message}</div>}
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
               <label htmlFor="title" className="form-label fw-semibold">
-                Title
+                Turinys
               </label>
               <input
                 type="text"
@@ -93,7 +93,7 @@ const MakeTicket = () => {
             </div>
             <div className="mb-3">
               <label htmlFor="description" className="form-label fw-semibold">
-                Description
+                Aprašymas
               </label>
               <textarea
                 id="description"
@@ -108,7 +108,7 @@ const MakeTicket = () => {
             </div>
             <div className="d-flex w-100 justify-content-end">
 <button type="submit" className="btn btn-primary fw-bold">
-              Send
+              Siusti
             </button>
             </div>
             

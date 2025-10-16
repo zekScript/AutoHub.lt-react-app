@@ -46,7 +46,7 @@ const AllMyTickets = () => {
       {/* No tickets */}
       {!loading && tickets.length === 0 && (
         <div className="alert alert-info text-center">
-          You don’t have any tickets yet. Create one to get started!
+          Tu neturi tiketu
         </div>
       )}
 
@@ -68,7 +68,7 @@ const AllMyTickets = () => {
                     href={`/view/${ticket._id}`}
                     className="btn btn-sm btn-outline-primary float-end"
                   >
-                    View Details
+                    Peržiura
                   </a>
                 </div>
               </div>

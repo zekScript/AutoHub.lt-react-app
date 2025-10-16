@@ -21,15 +21,21 @@ const Navbar = () => {
                 Pagrindas
               </a>
             </li>
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <a href="/my-wishlist" className="nav-link link-body-emphasis px-2">
                 Norai
+              </a>
+            </li> */}
+            <li className="nav-item">
+              <a href="/make-ticket" className="nav-link link-body-emphasis px-2">
+                Kontaktuoti pagalbos
               </a>
             </li>
             <li className="nav-item">
               <a href="/faqs" className="nav-link link-body-emphasis px-2">
                 FAQs
               </a>
+              
             </li>
           </ul>
           <ul className="nav">
@@ -67,7 +73,7 @@ const Navbar = () => {
             <li><hr className="dropdown-divider" /></li>
             <li><a className="dropdown-item" href={`/${user.id}/posts`}>Tavo skelbimai</a></li>
                         <li><a className="dropdown-item" href={`/add_skelbima`}>Pridėti skelbima</a></li>
-                                    <li><a className="dropdown-item" href={`/${user.id}/wishlist`}>Norai</a></li>
+                                    {/* <li><a className="dropdown-item" href={`/my-wishlist`}>Norai</a></li> */}
 
 
 

@@ -1,0 +1,12 @@
+
+.result-listing{
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+}
+
+.listing-info-result {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+}

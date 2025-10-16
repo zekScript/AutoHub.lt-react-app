@@ -118,6 +118,9 @@ const Search = () => {
    const fetchAllListings = async () => {
     const res = await fetch("http://localhost:8000/api/allListings")
     const data = await res.json()
+    if(res.status === 404){
+      return console.log("there are no data")
+    }
     
     setFetchedAllListings(data)
   }
@@ -219,6 +222,7 @@ const Search = () => {
           <div className="form-group mt-2">
             <label className="form-label-dark">Pavarų dėžė</label>
             <select name="transmission" className="form-select select-dark">
+              <option value="">Pasirinkite</option>
               <option value="manual">Mechaninė</option>
               <option value="automatic">Automatas</option>
             </select>
