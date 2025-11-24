@@ -158,13 +158,14 @@ const Add_skelbima = () => {
       body: formData,
     });
     if (res.ok) {
-      toast.success(
-        `Skelbimas sėkmingai idėtas`,
-        {
-          position: "top-right",
-          duration: 3000,
-        }
-      );
+      // toast.success(
+      //   `Skelbimas sėkmingai idėtas`,
+      //   {
+      //     position: "top-right",
+      //     duration: 3000,
+      //   }
+      // );
+      alert("post added")
     }
 
     if(res.status === 401){
