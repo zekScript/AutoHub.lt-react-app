@@ -13,6 +13,7 @@
     "@tailwindcss/vite": "^4.1.14",
     "axios": "^1.12.2",
     "bootstrap": "^5.3.8",
+    "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.2",
     "jwt-decode": "^4.0.0",
     "react": "^19.1.1",
