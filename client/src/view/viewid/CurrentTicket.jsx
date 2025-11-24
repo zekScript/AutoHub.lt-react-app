@@ -24,13 +24,13 @@ if(!currentUser){
   useEffect(() => {
     const fetchTicketAndUser = async () => {
       try {
-        const res = await fetch(`http://localhost:8000/api/ticket/${id}`);
+        const res = await fetch(`${import.meta.env.VITE_URL}/api/ticket/${id}`);
         const json = await res.json();
         if (res.ok) {
           setTicketInfo(json);
           setMessages(json.messages || []);
           if (json.user) {
-            const userRes = await fetch(`http://localhost:8000/api/user/${json.user}`);
+            const userRes = await fetch(`${import.meta.env.VITE_URL}/api/user/${json.user}`);
             const userJson = await userRes.json();
             if (userRes.ok) setUserInfo(userJson);
           }
@@ -52,7 +52,7 @@ if(!currentUser){
       for (const senderId of uniqueSenderIds) {
         if (!newSenderMap[senderId]) {
           try {
-            const res = await fetch(`http://localhost:8000/api/user/${senderId}`);
+            const res = await fetch(`${import.meta.env.VITE_URL}/api/user/${senderId}`);
             const json = await res.json();
             if (res.ok) {
               newSenderMap[senderId] = json;
@@ -72,7 +72,7 @@ if(!currentUser){
       return toast.error("Admin closed the ticket")
     }
     const token = Cookies.get("token");
-    const res = await fetch(`http://localhost:8000/api/ticket/${id}/message`, {
+    const res = await fetch(`${import.meta.env.VITE_URL}/api/ticket/${id}/message`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

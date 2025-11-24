@@ -15,7 +15,7 @@ const UpdateUser = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch(`http://localhost:8000/api/user/${id}`);
+        const res = await fetch(`${import.meta.env.VITE_URL}/api/user/${id}`);
         const json = await res.json();
         if (res.ok) {
           setName(json.name);
@@ -40,7 +40,7 @@ const UpdateUser = () => {
     };
     try {
       const token = Cookies.get("token")
-      const res = await fetch(`http://localhost:8000/api/update/user/${id}`, {
+      const res = await fetch(`${import.meta.env.VITE_URL}/api/update/user/${id}`, {
         method: 'PUT',
         body: JSON.stringify(user),
         headers: {

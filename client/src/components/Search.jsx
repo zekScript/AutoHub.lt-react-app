@@ -116,7 +116,7 @@ const Search = () => {
 
  useEffect(() => {
    const fetchAllListings = async () => {
-    const res = await fetch("http://localhost:8000/api/allListings")
+    const res = await fetch(`${import.meta.env.VITE_URL}/api/allListings`)
     const data = await res.json()
     if(res.status === 404){
       return console.log("there are no data")
@@ -267,7 +267,7 @@ const Search = () => {
 {fetchedAllListings.map((car, index) => (
           <a href={`/${car._id}/car_listings`} style={{textDecoration: "none"}} className="listing-card-dark" key={index}>
             <img
-              src={`http://localhost:8000${car.imageUrl[0]}`}
+              src={`${import.meta.env.VITE_URL}${car.imageUrl[0]}`}
 
               alt={car.model}
               className="listing-img-dark"

@@ -18,7 +18,7 @@ const AllMyTickets = () => {
   useEffect(() => {
     const fetchAllUsersTickets = async () => {
       try {
-        const res = await fetch(`http://localhost:8000/api/${id}/mytickets`);
+        const res = await fetch(`${import.meta.env.VITE_URL}/api/${id}/mytickets`);
         const data = await res.json();
         setTickets(data.tickets || []);
       } catch (err) {

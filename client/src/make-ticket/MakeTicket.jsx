@@ -16,7 +16,7 @@ const MakeTicket = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const token = Cookies.get("token");
-    const res = await fetch("http://localhost:8000/api/ticket", {
+    const res = await fetch(`${import.meta.env.VITE_URL}/api/ticket`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

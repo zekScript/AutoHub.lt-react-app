@@ -41,7 +41,7 @@ const SearchPage = () => {
       if(carType) params.append("carType", carType)
       if(sortBy) params.append("sortBy", sortBy)
 
-      const res = await fetch(`http://localhost:8000/api/listings/search?${params.toString()}`)
+      const res = await fetch(`${import.meta.env.VITE_URL}/api/listings/search?${params.toString()}`)
       const data = await res.json()
       
       setResults(data.skelbimai || [])
@@ -267,7 +267,7 @@ console.log(results)
 {results.map((car, index) => (
           <a href={`/${car._id}/car_listings`} style={{textDecoration: "none", marginTop: "15px"}} className="d-flex w-100 "  key={index}>
             <img
-              src={`http://localhost:8000${car.imageUrl[0]}`}
+              src={`${import.meta.env.VITE_URL}${car.imageUrl[0]}`}
               style={{width: "240px", height: "180px", display: "block"}}
               alt={car.model}
               className="listing-img-dark"

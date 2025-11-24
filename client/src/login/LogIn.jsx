@@ -21,7 +21,7 @@ const LogIn = () => {
   const handleLogIn = async (e) => {
     e.preventDefault();
     setErr(null);
-    const res = await fetch("http://localhost:8000/api/login", {
+    const res = await fetch(`${import.meta.env.VITE_URL}/api/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password })

@@ -14,7 +14,7 @@ const CarListings = () => {
   useEffect(() => {
     const fetchCarListings = async () => {
       try {
-        const res = await fetch(`http://localhost:8000/api/skelbimai/${params.id}`, {
+        const res = await fetch(`${import.meta.env.VITE_URL}/api/skelbimai/${params.id}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -26,7 +26,7 @@ const CarListings = () => {
         }
 
 
-        const userRes = await fetch(`http://localhost:8000/api/user/${json.skelbimai[0].author}`)
+        const userRes = await fetch(`${import.meta.env.VITE_URL}/api/user/${json.skelbimai[0].author}`)
         const jsonUser = await userRes.json()
           setSeller(jsonUser)
 
@@ -139,7 +139,7 @@ const CarListings = () => {
   {listing.imageUrl && listing.imageUrl.map((img, idx) => (
     <div key={idx} className={`carousel-item ${idx === 0 ? 'active' : ''}`}>
       <img
-        src={`http://localhost:8000${img}`}
+        src={`${import.meta.env.VITE_URL}${img}`}
         className="d-block" 
         style={{width: "100%", height: "400px", objectFit: "cover"}}
         alt={`${listing.carName}-${idx}`}

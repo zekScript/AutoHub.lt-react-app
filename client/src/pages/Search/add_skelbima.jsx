@@ -150,7 +150,7 @@ const Add_skelbima = () => {
       }
     }
 
-    const res = await fetch("http://localhost:8000/api/add_skelbima", {
+    const res = await fetch(`${import.meta.env.VITE_URL}/api/add_skelbima`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${Cookies.get("token")}`,

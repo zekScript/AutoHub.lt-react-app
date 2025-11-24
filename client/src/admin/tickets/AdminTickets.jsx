@@ -13,7 +13,7 @@ const AdminTickets = () => {
     const fetchData = async () => {
       try{
           const token = Cookies.get("token");
-        const res = await fetch("http://localhost:8000/api/tickets", {
+        const res = await fetch(`${import.meta.env.VITE_URL}/api/tickets`, {
           method: "GET",
           headers: {
             "content-type": "application/json",
@@ -37,7 +37,7 @@ const AdminTickets = () => {
 
   const handleStatusChange = async (id, newStatus) => {
     try {
-      const res = await fetch(`http://localhost:8000/api/update/ticket/${id}`, {
+      const res = await fetch(`${import.meta.env.VITE_URL}/api/update/ticket/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status: newStatus }),

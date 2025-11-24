@@ -21,7 +21,7 @@ const ViewPosts = () => {
       const fetchAllUsersTickets = async () => {
         try {
           
-          const resUserPost = await fetch(`http://localhost:8000/api/myListings/${id}`)
+          const resUserPost = await fetch(`${import.meta.env.VITE_URL}/api/myListings/${id}`)
           const userDataPost = await resUserPost.json()
           setPosts(userDataPost.posts || [])
         } catch (err) {
@@ -37,7 +37,7 @@ const ViewPosts = () => {
 
 const handlePostDelete = async (params) =>{
   try{
-    const reqDeletion = await fetch(`http://localhost:8000/api/delete/myListings/${params}`, {
+    const reqDeletion = await fetch(`${import.meta.env.VITE_URL}/api/delete/myListings/${params}`, {
       method: "DELETE",
     })
     if(reqDeletion.ok){

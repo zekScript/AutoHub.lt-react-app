@@ -150,7 +150,7 @@ const EditPost = () => {
       carType,
       engineLiter
     };
-    const res = await fetch(`http://localhost:8000/api/update/myListing/${p}`, {
+    const res = await fetch(`${import.meta.env.VITE_URL}/api/update/myListing/${p}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -175,7 +175,7 @@ const EditPost = () => {
 
    useEffect(() => {
     const fetchPostData = async () => {
-        const getPostDataRes = await fetch(`http://localhost:8000/api/findListingByPostId/${p}`)
+        const getPostDataRes = await fetch(`${import.meta.env.VITE_URL}/api/findListingByPostId/${p}`)
         const resPostData = await getPostDataRes.json()
         setBrand(resPostData.findPostById[0].carName)
         setPrice(resPostData.findPostById[0].price)

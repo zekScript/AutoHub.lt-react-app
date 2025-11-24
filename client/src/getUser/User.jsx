@@ -14,7 +14,7 @@ export const User = () => {
     const fetchData = async () => {
       try{
         const token = Cookies.get("token")
-        const res = await fetch("http://localhost:8000/api/users", {
+        const res = await fetch(`${import.meta.env.VITE_URL}/api/users`, {
           method: "GET",
           headers: {
             "content-type": "application/json",
@@ -40,7 +40,7 @@ export const User = () => {
   
   const handleDelete = async (id) => {
     try {
-      const res = await fetch(`http://localhost:8000/api/delete/user/${id}`, {
+      const res = await fetch(`${import.meta.env.VITE_URL}/api/delete/user/${id}`, {
         method: "DELETE",
       });
 

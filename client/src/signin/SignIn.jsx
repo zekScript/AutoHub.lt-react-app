@@ -20,7 +20,7 @@ const SignIn = () => {
       const handleSignIn = async (e) => {
     e.preventDefault();
     const user = { name, email, password };
-    const res = await fetch("http://localhost:8000/api/signin", {
+    const res = await fetch(`${import.meta.env.VITE_URL}/api/signin`, {
       method: 'POST',
       body: JSON.stringify(user),
       headers: { 'Content-Type': 'application/json' }
