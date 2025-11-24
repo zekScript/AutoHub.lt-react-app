@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
-import './CarListing.css'
+import './carListing.css'
 import formatDate from '../../components/funcs/formatDate'
 import { numberWithCommas } from '../../components/funcs/bigNumberSeparation'
 import engineConverter from "../../components/funcs/horsepowerAndKWConverter"
